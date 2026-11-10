@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Research folder structure generator</title>
+<style>
+:root{--bg:#fafaf8;--fg:#1c1c1a;--mut:#6b6b66;--card:#fff;--bd:#d9d9d2;--ac:#1f6f5c;--acfg:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--fg:#ecece8;--mut:#9a9a93;--card:#202020;--bd:#3a3a36;--ac:#4fb59c;--acfg:#10201b}}
+:root[data-theme="dark"]{--bg:#161615;--fg:#ecece8;--mut:#9a9a93;--card:#202020;--bd:#3a3a36;--ac:#4fb59c;--acfg:#10201b}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:820px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:15px;margin:0}
+.sub{color:var(--mut);margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-bottom:14px}
+.tab,.sm{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--fg);border-radius:8px;padding:8px 16px;cursor:pointer}
+.sm{padding:4px 10px;font-size:13px}
+.tab[aria-selected="true"]{background:var(--ac);color:var(--acfg);border-color:var(--ac);font-weight:600}
+label{display:block;font-size:12.5px;color:var(--mut);margin-bottom:3px}
+label.it{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--fg);margin:3px 0;cursor:pointer}
+.off{color:var(--mut)}
+input[type=text],input[type=date],textarea{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg);font:inherit}
+textarea{resize:vertical}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.hint{font-size:12.5px;color:var(--mut);margin:6px 0 0}
+.head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.head div{display:flex;gap:6px}
+pre{margin:0;white-space:pre;overflow-x:auto;font:12.5px/1.45 ui-monospace,Consolas,monospace;max-height:440px;overflow-y:auto}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button.pri{font:inherit;background:var(--ac);color:var(--acfg);border:1px solid var(--ac);border-radius:8px;padding:10px 18px;font-weight:600;cursor:pointer}
+#msg{color:var(--mut);font-size:13px}
+</style>
+</head>
+<body>
+<main>
+<h1>Research folder structure generator</h1>
+<p class="sub">Create a standard folder structure and a README for a research project or experiment. Everything runs in your browser; nothing is uploaded.</p>
+
+<div class="tabs" role="tablist">
+<button class="tab" role="tab" id="t-project" aria-selected="true">Project</button>
+<button class="tab" role="tab" id="t-experiment" aria-selected="false">Experiment</button>
+</div>
+
+<div class="card">
+<label for="nm" id="lbl">Project name</label>
+<input type="text" id="nm" autocomplete="off">
+<p class="hint" id="hint"></p>
+</div>
+
+<div class="card" id="meta">
+<h2 style="margin-bottom:10px">Project details</h2>
+<div class="g2">
+<div><label for="f-date">Date</label><input type="date" id="f-date"></div>
+<div><label for="f-pi">Principal Investigator (PI)</label><input type="text" id="f-pi"></div>
+<div><label for="f-piorcid">PI ORCID</label><input type="text" id="f-piorcid" placeholder="0000-0000-0000-0000"></div>
+<div><label for="f-piemail">PI email</label><input type="text" id="f-piemail"></div>
+<div><label for="f-con">Member</label><input type="text" id="f-con"></div>
+<div><label for="f-conorcid">Member ORCID</label><input type="text" id="f-conorcid" placeholder="0000-0000-0000-0000"></div>
+<div><label for="f-conemail">Member email</label><input type="text" id="f-conemail"></div>
+</div>
+<div style="margin-top:10px"><label for="f-desc">Description</label><textarea id="f-desc" rows="3"></textarea></div>
+<div style="margin-top:10px"><label for="f-contractor">Principal Contractor (institute, department, address; one line each)</label><textarea id="f-contractor" rows="4"></textarea></div>
+<p class="hint">Only the project name is required. These details are written at the top of the README.</p>
+</div>
+
+<div class="card">
+<div class="head"><h2>Folders to include</h2><div><button class="sm" id="all">Select all</button><button class="sm" id="none">Clear all</button></div></div>
+<div id="list"></div>
+<p class="hint">Folders are numbered automatically in the order of the selected folders. Unchecking a folder also unchecks its subfolders.</p>
+</div>
+
+<div class="card"><div class="head"><h2>README preview</h2></div><pre id="prev"></pre></div>
+
+<div class="bar"><button class="pri" id="go">Download ZIP</button><span id="msg"></span></div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+// Each node: [folder name without number, description, optional children]
+const PROJECT=[
+["project-management","Planning and administration of the project.",[
+ ["proposals","Project proposals and applications."],
+ ["finance","Budgets, expenses and other financial documents."],
+ ["reports","Progress and reports."]]],
+["ethics-governance","Ethics and governance documentation.",[
+ ["ethics-approval","Ethics applications and approvals."],
+ ["consent-forms","Consent forms."]]],
+["experiments","One folder for each experiment of the project."],
+["data-management","Documents and files related to data management."],
+["dissemination","Material for sharing the work of the project.",[
+ ["presentations","Presentations.",[
+  ["lab-meeting","Presentations in lab meetings."],
+  ["conferences","Presentations for conferences."]]],
+ ["publications","Publications and manuscripts."],
+ ["poster","Posters."],
+ ["publicity","Publicity material."]]]
+];
+const EXPERIMENT=[
+["protocols","Protocols and procedures of the experiment.",[
+ ["measurements","Records of measurements."],
+ ["logs","Logs of the work carried out."]]],
+["data","Data obtained or related to the experiment.",[
+ ["raw-data","Original data, MUST be kept unmodified."],
+ ["processed-data","Data derived from the raw data."],
+ ["external-data","Data obtained from external sources."]]],
+["code-scripts","Notebooks and scripts used for data analyses.",[
+ ["notebooks","Notebooks."],
+ ["src","Source code."]]],
+["reports","Reports of the experiment.",[
+ ["drafts","Draft versions."],
+ ["final","Final versions."],
+ ["presentation","Presentations."]]],
+["legacy","Outdated or archived material."]
+];
+function prep(a,par,path){return a.map(x=>{const n={base:x[0],desc:x[1],par:par,id:path+x[0]};n.kids=x[2]?prep(x[2],n,n.id+"/"):[];return n;});}
+const TYPES={
+ project:{label:"Project",field:"Project name",ph:"e.g. My research project",tree:prep(PROJECT,null,""),root:n=>n,rootHint:"The project name becomes the root folder."},
+ experiment:{label:"Experiment",field:"Experiment name",ph:"e.g. Growth curves",tree:prep(EXPERIMENT,null,""),root:n=>"Experiment_"+n,rootHint:"The root folder is named Experiment_ followed by the experiment name."}
+};
+let type="project";const sel={project:{},experiment:{}};
+const $=s=>document.querySelector(s);
+const pad=n=>String(n).padStart(2,"0");
+const isSel=id=>sel[type][id]!==false;
+const clean=s=>s.trim().replace(/[\\\/:*?"<>|]/g,"").replace(/\s+/g,"-");
+
+function setDown(n,v){sel[type][n.id]=v;n.kids.forEach(k=>setDown(k,v));}
+function onToggle(n,v){if(v){sel[type][n.id]=true;for(let p=n.par;p;p=p.par)sel[type][p.id]=true;}else setDown(n,false);}
+// Selected folders, renumbered in sequence among their siblings
+function chosen(nodes){let i=0;const o=[];nodes.forEach(n=>{if(!isSel(n.id))return;i++;const k=chosen(n.kids),e=[pad(i)+"-"+n.base,n.desc];if(k.length)e.push(k);o.push(e);});return o;}
+function treeLines(nodes,pre){const o=[];nodes.forEach((n,i)=>{const last=i===nodes.length-1;o.push(pre+(last?"└── ":"├── ")+n[0]+"/");if(n[2])o.push(...treeLines(n[2],pre+(last?"    ":"│   ")));});return o;}
+function descLines(nodes,path){const o=[];nodes.forEach(n=>{const p=path+n[0]+"/";o.push("",p,"    "+n[1]);if(n[2])o.push(...descLines(n[2],p));});return o;}
+function addFolders(z,nodes){nodes.forEach(n=>{const f=z.folder(n[0]);if(n[2])addFolders(f,n[2]);});}
+
+function info(){const T=TYPES[type],raw=$("#nm").value.trim(),c=clean(raw);return{T,raw,root:c?T.root(c):null,tree:chosen(T.tree)};}
+const V=id=>$("#"+id).value.trim();
+const ml=t=>t.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).join("  \n");
+function field(h,v,hint){return "# "+h+"\n"+(v?v+"  \n":"")+"("+hint+")\n";}
+function projectHead(name){return [
+ "# Title\n# "+name+"\n(The name given to the project.)\n",
+ field("Date",V("f-date"),"A date associated with the creation or availability of the resource. Recommended format: YYYY-MM-DD"),
+ field("Description",ml($("#f-desc").value),"A textual description of the content of the resource."),
+ field("Principal Investigator (PI)",ml($("#f-pi").value),"Primarily responsible for the project. Can be a repetitive list of authors, artists, collectors, organizations etc."),
+ field("PI.ORCID",V("f-piorcid"),"ORCID identifier of the Principal Investigator"),
+ field("PI.Email",V("f-piemail"),"email identifier of the Principal Investigator"),
+ field("Principal Contractor",ml($("#f-contractor").value),"The department/institute responsible for the project."),
+ field("Member",ml($("#f-con").value),"Who contributed to the resource/project and edit this document "),
+ field("Member.ORCID",V("f-conorcid"),"ORCID identifier of the Member"),
+ field("Member.Email",V("f-conemail"),"Email identifier of the Member")
+ ].join("\n");}
+function mdRows(nodes,path){const o=[];nodes.forEach(n=>{const p=path+n[0]+"/";o.push("| `"+p+"` | "+n[1]+" |");if(n[2])o.push(...mdRows(n[2],p));});return o;}
+function tail(name,root,tree){return ["This folder contains the "+type+"-level folder structure for **"+name+"**.","","## Naming scheme","","Folders are named `NN-content`:","","- `NN` is a two-digit index used to sort the folders.","- `content` describes what the folder contains, with words separated by hyphens.",...(type==="experiment"?["","The root folder is named `Experiment_` followed by the experiment name."]:[]),"","## Folder structure","","```",root+"/",...treeLines(tree,""),"```","","## Folder descriptions","","| Folder | Description |","| --- | --- |",...mdRows(tree,"")].join("\n")+"\n";}
+function readme(){const {T,raw,root,tree}=info(),r=root||T.root("<name>"),name=raw||"<"+T.label+" name>";
+ if(type==="project")return projectHead(name)+"\n\n"+tail(name,r,tree);
+ return "# Title\n# "+name+"\n\nCreated: "+new Date().toISOString().slice(0,10)+"\n\n"+tail(name,r,tree);}
+function list(nodes,box,depth){let i=0;nodes.forEach(n=>{const on=isSel(n.id);if(on)i++;
+ const lab=document.createElement("label");lab.className="it";lab.style.marginLeft=(depth*20)+"px";lab.title=n.desc;
+ const cb=document.createElement("input");cb.type="checkbox";cb.checked=on;cb.onchange=()=>{onToggle(n,cb.checked);refresh();};
+ const sp=document.createElement("span");sp.textContent=(on?pad(i)+"-":"")+n.base+"/";if(!on)sp.className="off";
+ lab.append(cb,sp);box.appendChild(lab);list(n.kids,box,depth+1);});}
+function refresh(){const {T}=info();$("#lbl").textContent=T.field;$("#nm").placeholder=T.ph;$("#hint").textContent=T.rootHint;
+ const box=$("#list");box.innerHTML="";list(T.tree,box,0);$("#meta").style.display=type==="project"?"":"none";$("#prev").textContent=readme();}
+function setType(t){type=t;Object.keys(TYPES).forEach(k=>$("#t-"+k).setAttribute("aria-selected",k===t));$("#msg").textContent="";refresh();}
+Object.keys(TYPES).forEach(k=>$("#t-"+k).onclick=()=>setType(k));
+$("#nm").addEventListener("input",refresh);
+document.querySelectorAll("#meta input,#meta textarea").forEach(x=>x.addEventListener("input",refresh));
+$("#f-date").value=new Date().toISOString().slice(0,10);
+$("#all").onclick=()=>{TYPES[type].tree.forEach(n=>setDown(n,true));refresh();};
+$("#none").onclick=()=>{TYPES[type].tree.forEach(n=>setDown(n,false));refresh();};
+
+$("#go").onclick=async()=>{const msg=$("#msg"),{T,root,tree}=info();msg.textContent="";
+ if(!root){msg.textContent="Please enter a "+T.field.toLowerCase()+".";$("#nm").focus();return;}
+ if(!tree.length){msg.textContent="Please select at least one folder.";return;}
+ if(typeof JSZip==="undefined"){msg.textContent="The ZIP library could not be loaded. Check your connection.";return;}
+ const z=new JSZip(),R=z.folder(root);addFolders(R,tree);R.file("README.md",readme());
+ const blob=await z.generateAsync({type:"blob"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=root+".zip";document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(a.href),2000);msg.textContent="Downloaded "+root+".zip";};
+refresh();
+</script>
+</body>
+</html>
