@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Research folder structure generator</title>
 <style>
-:root{--bg:#fafaf8;--fg:#1c1c1a;--mut:#6b6b66;--card:#fff;--bd:#d9d9d2;--ac:#1f6f5c;--acfg:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--fg:#ecece8;--mut:#9a9a93;--card:#202020;--bd:#3a3a36;--ac:#4fb59c;--acfg:#10201b}}
-:root[data-theme="dark"]{--bg:#161615;--fg:#ecece8;--mut:#9a9a93;--card:#202020;--bd:#3a3a36;--ac:#4fb59c;--acfg:#10201b}
+:root{--bg:#fafaf8;--fg:#1c1c1a;--mut:#6b6b66;--card:#fff;--bd:#d9d9d2;--ac:#1f6f5c;--acfg:#fff;--err:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--fg:#ecece8;--mut:#9a9a93;--card:#202020;--bd:#3a3a36;--ac:#4fb59c;--acfg:#10201b;--err:#f2928a}}
+:root[data-theme="dark"]{--bg:#161615;--fg:#ecece8;--mut:#9a9a93;--card:#202020;--bd:#3a3a36;--ac:#4fb59c;--acfg:#10201b;--err:#f2928a}
 html,body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 main{max-width:820px;margin:0 auto;padding:20px 16px 48px}
 h1{font-size:22px;margin:0 0 4px}h2{font-size:15px;margin:0}
@@ -23,6 +23,8 @@ label.it{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--fg);
 input[type=text],input[type=date],textarea{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg);font:inherit}
 textarea{resize:vertical}
 .g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.err{color:var(--err);font-size:12.5px;margin-top:3px}
+input.bad,textarea.bad{border-color:var(--err)}
 .hint{font-size:12.5px;color:var(--mut);margin:6px 0 0}
 .head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
 .head div{display:flex;gap:6px}
@@ -141,11 +143,11 @@ function projectHead(name){return [
  field("Date",V("f-date"),"A date associated with the creation or availability of the resource. Recommended format: YYYY-MM-DD"),
  field("Description",ml($("#f-desc").value),"A textual description of the content of the resource."),
  field("Principal Investigator (PI)",ml($("#f-pi").value),"Primarily responsible for the project. Can be a repetitive list of authors, artists, collectors, organizations etc."),
- field("PI.ORCID",V("f-piorcid"),"ORCID identifier of the Principal Investigator"),
+ field("PI.ORCID",normOrcid(V("f-piorcid")),"ORCID identifier of the Principal Investigator"),
  field("PI.Email",V("f-piemail"),"email identifier of the Principal Investigator"),
  field("Principal Contractor",ml($("#f-contractor").value),"The department/institute responsible for the project."),
  field("Member",ml($("#f-con").value),"Who contributed to the resource/project and edit this document "),
- field("Member.ORCID",V("f-conorcid"),"ORCID identifier of the Member"),
+ field("Member.ORCID",normOrcid(V("f-conorcid")),"ORCID identifier of the Member"),
  field("Member.Email",V("f-conemail"),"Email identifier of the Member")
  ].join("\n");}
 function mdRows(nodes,path){const o=[];nodes.forEach(n=>{const p=path+n[0]+"/";o.push("| `"+p+"` | "+n[1]+" |");if(n[2])o.push(...mdRows(n[2],p));});return o;}
@@ -158,8 +160,26 @@ function list(nodes,box,depth){let i=0;nodes.forEach(n=>{const on=isSel(n.id);if
  const cb=document.createElement("input");cb.type="checkbox";cb.checked=on;cb.onchange=()=>{onToggle(n,cb.checked);refresh();};
  const sp=document.createElement("span");sp.textContent=(on?pad(i)+"-":"")+n.base+"/";if(!on)sp.className="off";
  lab.append(cb,sp);box.appendChild(lab);list(n.kids,box,depth+1);});}
-function refresh(){const {T}=info();$("#lbl").textContent=T.field;$("#nm").placeholder=T.ph;$("#hint").textContent=T.rootHint;
- const box=$("#list");box.innerHTML="";list(T.tree,box,0);$("#meta").style.display=type==="project"?"":"none";$("#prev").textContent=readme();}
+const normOrcid=v=>v.replace(/^https?:\/\/(www\.)?orcid\.org\//i,"").trim().toUpperCase();
+function orcidMsg(v){if(!v)return "";const id=normOrcid(v);
+ if(!/^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(id))return "Use the format 0000-0000-0000-0000 (the last character can be X).";
+ const d=id.replace(/-/g,"");let t=0;for(let i=0;i<15;i++)t=(t+Number(d[i]))*2;
+ const r=(12-t%11)%11,c=r===10?"X":String(r);
+ return c===d[15]?"":"This ORCID iD is not valid: the check digit does not match.";}
+const EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const emailMsg=v=>!v||EMAIL.test(v)?"":"Enter a valid email address, for example name@domain.org.";
+function errEl(id){let e=document.getElementById("e-"+id);if(!e){e=document.createElement("div");e.id="e-"+id;e.className="err";e.setAttribute("role","alert");$("#"+id).insertAdjacentElement("afterend",e);}return e;}
+function put(errs,id,m,blocking){const e=errEl(id);e.textContent=m;e.style.color=blocking?"":"var(--mut)";$("#"+id).classList.toggle("bad",!!(m&&blocking));if(m&&blocking)errs.push({id:id,msg:m});}
+function validate(){const errs=[],raw=$("#nm").value;let m="",b=true;
+ if(raw.trim()&&!clean(raw))m="The name has no characters that can be used in a folder name.";
+ else if(/[\\\/:*?"<>|]/.test(raw)){m="These characters are removed from the folder name: \\ / : * ? \" < > |";b=false;}
+ put(errs,"nm",m,b);
+ const meta=type==="project";
+ [["f-piemail",emailMsg],["f-conemail",emailMsg],["f-piorcid",orcidMsg],["f-conorcid",orcidMsg]].forEach(([id,f])=>put(errs,id,meta?f(V(id)):"",true));
+ put(errs,"f-date",meta&&$("#f-date").validity.badInput?"Enter a valid date.":"",true);
+ return errs;}
+function refresh(){const {T,root}=info();$("#lbl").textContent=T.field;$("#nm").placeholder=T.ph;$("#hint").textContent=T.rootHint+(root?" Root folder: "+root+"/":"");
+ const box=$("#list");box.innerHTML="";list(T.tree,box,0);$("#meta").style.display=type==="project"?"":"none";$("#prev").textContent=readme();validate();}
 function setType(t){type=t;Object.keys(TYPES).forEach(k=>$("#t-"+k).setAttribute("aria-selected",k===t));$("#msg").textContent="";refresh();}
 Object.keys(TYPES).forEach(k=>$("#t-"+k).onclick=()=>setType(k));
 $("#nm").addEventListener("input",refresh);
@@ -169,6 +189,7 @@ $("#all").onclick=()=>{TYPES[type].tree.forEach(n=>setDown(n,true));refresh();};
 $("#none").onclick=()=>{TYPES[type].tree.forEach(n=>setDown(n,false));refresh();};
 
 $("#go").onclick=async()=>{const msg=$("#msg"),{T,root,tree}=info();msg.textContent="";
+ const errs=validate();if(errs.length){msg.textContent="Please fix the highlighted fields before downloading.";$("#"+errs[0].id).focus();return;}
  if(!root){msg.textContent="Please enter a "+T.field.toLowerCase()+".";$("#nm").focus();return;}
  if(!tree.length){msg.textContent="Please select at least one folder.";return;}
  if(typeof JSZip==="undefined"){msg.textContent="The ZIP library could not be loaded. Check your connection.";return;}
