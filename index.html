@@ -57,9 +57,6 @@ button.pri{font:inherit;background:var(--ac);color:var(--acfg);border:1px solid 
 <div><label for="f-pi">Principal Investigator (PI)</label><input type="text" id="f-pi"></div>
 <div><label for="f-piorcid">PI ORCID</label><input type="text" id="f-piorcid" placeholder="0000-0000-0000-0000"></div>
 <div><label for="f-piemail">PI email</label><input type="text" id="f-piemail"></div>
-<div><label for="f-con">Member</label><input type="text" id="f-con"></div>
-<div><label for="f-conorcid">Member ORCID</label><input type="text" id="f-conorcid" placeholder="0000-0000-0000-0000"></div>
-<div><label for="f-conemail">Member email</label><input type="text" id="f-conemail"></div>
 </div>
 <div style="margin-top:10px"><label for="f-desc">Description</label><textarea id="f-desc" rows="3"></textarea></div>
 <div style="margin-top:10px"><label for="f-contractor">Principal Contractor (institute, department, address; one line each)</label><textarea id="f-contractor" rows="4"></textarea></div>
@@ -145,10 +142,7 @@ function projectHead(name){return [
  field("Principal Investigator (PI)",ml($("#f-pi").value),"Primarily responsible for the project. Can be a repetitive list of authors, artists, collectors, organizations etc."),
  field("PI.ORCID",normOrcid(V("f-piorcid")),"ORCID identifier of the Principal Investigator"),
  field("PI.Email",V("f-piemail"),"email identifier of the Principal Investigator"),
- field("Principal Contractor",ml($("#f-contractor").value),"The department/institute responsible for the project."),
- field("Member",ml($("#f-con").value),"Who contributed to the resource/project and edit this document "),
- field("Member.ORCID",normOrcid(V("f-conorcid")),"ORCID identifier of the Member"),
- field("Member.Email",V("f-conemail"),"Email identifier of the Member")
+ field("Principal Contractor",ml($("#f-contractor").value),"The department/institute responsible for the project.")
  ].join("\n");}
 function mdRows(nodes,path){const o=[];nodes.forEach(n=>{const p=path+n[0]+"/";o.push("| `"+p+"` | "+n[1]+" |");if(n[2])o.push(...mdRows(n[2],p));});return o;}
 function tail(name,root,tree){return ["This folder contains the "+type+"-level folder structure for **"+name+"**.","","## Naming scheme","","Folders are named `NN-content`:","","- `NN` is a two-digit index used to sort the folders.","- `content` describes what the folder contains, with words separated by hyphens.",...(type==="experiment"?["","The root folder is named `Experiment_` followed by the experiment name."]:[]),"","## Folder structure","","```",root+"/",...treeLines(tree,""),"```","","## Folder descriptions","","| Folder | Description |","| --- | --- |",...mdRows(tree,"")].join("\n")+"\n";}
@@ -175,7 +169,7 @@ function validate(){const errs=[],raw=$("#nm").value;let m="",b=true;
  else if(/[\\\/:*?"<>|]/.test(raw)){m="These characters are removed from the folder name: \\ / : * ? \" < > |";b=false;}
  put(errs,"nm",m,b);
  const meta=type==="project";
- [["f-piemail",emailMsg],["f-conemail",emailMsg],["f-piorcid",orcidMsg],["f-conorcid",orcidMsg]].forEach(([id,f])=>put(errs,id,meta?f(V(id)):"",true));
+ [["f-piemail",emailMsg],["f-piorcid",orcidMsg]].forEach(([id,f])=>put(errs,id,meta?f(V(id)):"",true));
  put(errs,"f-date",meta&&$("#f-date").validity.badInput?"Enter a valid date.":"",true);
  return errs;}
 function refresh(){const {T,root}=info();$("#lbl").textContent=T.field;$("#nm").placeholder=T.ph;$("#hint").textContent=T.rootHint+(root?" Root folder: "+root+"/":"");
