@@ -144,8 +144,10 @@ function projectHead(name){return [
  field("PI.Email",V("f-piemail"),"email identifier of the Principal Investigator"),
  field("Principal Contractor",ml($("#f-contractor").value),"The department/institute responsible for the project.")
  ].join("\n");}
+function treeDesc(nodes,pre){const o=[];nodes.forEach((n,i)=>{const last=i===nodes.length-1;o.push([pre+(last?"└── ":"├── ")+n[0]+"/",n[1]]);if(n[2])o.push(...treeDesc(n[2],pre+(last?"    ":"│   ")));});return o;}
+function treeBlock(root,tree){const rows=treeDesc(tree,""),w=Math.max(0,...rows.map(r=>r[0].length))+3;return [root+"/",...rows.map(r=>r[0].padEnd(w)+"<- "+r[1])];}
 function mdRows(nodes,path){const o=[];nodes.forEach(n=>{const p=path+n[0]+"/";o.push("| `"+p+"` | "+n[1]+" |");if(n[2])o.push(...mdRows(n[2],p));});return o;}
-function tail(name,root,tree){return ["This folder contains the "+type+"-level folder structure for **"+name+"**.","","## Naming scheme","","Folders are named `NN-content`:","","- `NN` is a two-digit index used to sort the folders.","- `content` describes what the folder contains, with words separated by hyphens.",...(type==="experiment"?["","The root folder is named `Experiment_` followed by the experiment name."]:[]),"","## Folder structure","","```",root+"/",...treeLines(tree,""),"```","","## Folder descriptions","","| Folder | Description |","| --- | --- |",...mdRows(tree,"")].join("\n")+"\n";}
+function tail(name,root,tree){return ["This folder contains the "+type+"-level folder structure for **"+name+"**.","","## Naming scheme","","Folders are named `NN-content`:","","- `NN` is a two-digit index used to sort the folders.","- `content` describes what the folder contains, with words separated by hyphens.",...(type==="experiment"?["","The root folder is named `Experiment_` followed by the experiment name."]:[]),"","## Folder structure","","```",...treeBlock(root,tree),"```","","## Folder descriptions","","| Folder | Description |","| --- | --- |",...mdRows(tree,"")].join("\n")+"\n";}
 function readme(){const {T,raw,root,tree}=info(),r=root||T.root("<name>"),name=raw||"<"+T.label+" name>";
  if(type==="project")return projectHead(name)+"\n\n"+tail(name,r,tree);
  return "# Title\n# "+name+"\n\nCreated: "+new Date().toISOString().slice(0,10)+"\n\n"+tail(name,r,tree);}
