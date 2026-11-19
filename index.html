@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Research folder structure generator</title>
+<title>Research Folder Structure Generator</title>
 <style>
 :root{--bg:#fafaf8;--fg:#1c1c1a;--mut:#6b6b66;--card:#fff;--bd:#d9d9d2;--ac:#1f6f5c;--acfg:#fff;--err:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--fg:#ecece8;--mut:#9a9a93;--card:#202020;--bd:#3a3a36;--ac:#4fb59c;--acfg:#10201b;--err:#f2928a}}
@@ -36,9 +36,9 @@ button.pri{font:inherit;background:var(--ac);color:var(--acfg);border:1px solid 
 </head>
 <body>
 <main>
-<h1>Research folder structure generator</h1>
-<p class="sub">Create a standard folder structure and a README for a research project or experiment. Everything runs in your browser; nothing is uploaded.</p>
-
+<h1>Research Folder Structure Generator</h1>
+<p class="sub">This tool helps you create a standard folder structure and a README for a research project or experiment. Everything runs in your browser; nothing is uploaded.</p>
+<p class="sub">Just fill in the form and click “Download ZIP”. You will get your new research folder structure, a README file with the documentation, and a tips file for good research data management, ready for your research data.</p>
 <div class="tabs" role="tablist">
 <button class="tab" role="tab" id="t-project" aria-selected="true">Project</button>
 <button class="tab" role="tab" id="t-experiment" aria-selected="false">Experiment</button>
@@ -57,6 +57,9 @@ button.pri{font:inherit;background:var(--ac);color:var(--acfg);border:1px solid 
 <div><label for="f-pi">Principal Investigator (PI)</label><input type="text" id="f-pi"></div>
 <div><label for="f-piorcid">PI ORCID</label><input type="text" id="f-piorcid" placeholder="0000-0000-0000-0000"></div>
 <div><label for="f-piemail">PI email</label><input type="text" id="f-piemail"></div>
+<div><label for="f-con">Member</label><input type="text" id="f-con"></div>
+<div><label for="f-conorcid">Member ORCID</label><input type="text" id="f-conorcid" placeholder="0000-0000-0000-0000"></div>
+<div><label for="f-conemail">Member email</label><input type="text" id="f-conemail"></div>
 </div>
 <div style="margin-top:10px"><label for="f-desc">Description</label><textarea id="f-desc" rows="3"></textarea></div>
 <div style="margin-top:10px"><label for="f-contractor">Principal Contractor (institute, department, address; one line each)</label><textarea id="f-contractor" rows="4"></textarea></div>
@@ -142,11 +145,13 @@ function projectHead(name){return [
  field("Principal Investigator (PI)",ml($("#f-pi").value),"Primarily responsible for the project. Can be a repetitive list of authors, artists, collectors, organizations etc."),
  field("PI.ORCID",normOrcid(V("f-piorcid")),"ORCID identifier of the Principal Investigator"),
  field("PI.Email",V("f-piemail"),"email identifier of the Principal Investigator"),
- field("Principal Contractor",ml($("#f-contractor").value),"The department/institute responsible for the project.")
+ field("Principal Contractor",ml($("#f-contractor").value),"The department/institute responsible for the project."),
+ field("Member",ml($("#f-con").value),"Who contributed to the resource/project and edit this document "),
+ field("Member.ORCID",normOrcid(V("f-conorcid")),"ORCID identifier of the Member"),
+ field("Member.Email",V("f-conemail"),"Email identifier of the Member")
  ].join("\n");}
-function treeDesc(nodes,pre){const o=[];nodes.forEach((n,i)=>{const last=i===nodes.length-1;o.push([pre+(last?"└── ":"├── ")+n[0]+"/",n[1]]);if(n[2])o.push(...treeDesc(n[2],pre+(last?"    ":"│   ")));});return o;}
-function treeBlock(root,tree){const rows=treeDesc(tree,""),w=Math.max(0,...rows.map(r=>r[0].length))+3;return [root+"/",...rows.map(r=>r[0].padEnd(w)+"<- "+r[1])];}
-function tail(name,root,tree){return ["This folder contains the "+type+"-level folder structure for **"+name+"**.","","## Naming scheme","","Folders are named `NN-content`:","","- `NN` is a two-digit index used to sort the folders.","- `content` describes what the folder contains, with words separated by hyphens.",...(type==="experiment"?["","The root folder is named `Experiment_` followed by the experiment name."]:[]),"","## Folder structure","","```",root+"/",...treeLines(tree,""),"```","","## Folder descriptions","","```",...treeBlock(root,tree),"```"].join("\n")+"\n";}
+function mdRows(nodes,path){const o=[];nodes.forEach(n=>{const p=path+n[0]+"/";o.push("| `"+p+"` | "+n[1]+" |");if(n[2])o.push(...mdRows(n[2],p));});return o;}
+function tail(name,root,tree){return ["This folder contains the "+type+"-level folder structure for **"+name+"**.","","## Naming scheme","","Folders are named `NN-content`:","","- `NN` is a two-digit index used to sort the folders.","- `content` describes what the folder contains, with words separated by hyphens.",...(type==="experiment"?["","The root folder is named `Experiment_` followed by the experiment name."]:[]),"","## Folder structure","","```",root+"/",...treeLines(tree,""),"```","","## Folder descriptions","","| Folder | Description |","| --- | --- |",...mdRows(tree,"")].join("\n")+"\n";}
 function readme(){const {T,raw,root,tree}=info(),r=root||T.root("<name>"),name=raw||"<"+T.label+" name>";
  if(type==="project")return projectHead(name)+"\n\n"+tail(name,r,tree);
  return "# Title\n# "+name+"\n\nCreated: "+new Date().toISOString().slice(0,10)+"\n\n"+tail(name,r,tree);}
@@ -170,7 +175,7 @@ function validate(){const errs=[],raw=$("#nm").value;let m="",b=true;
  else if(/[\\\/:*?"<>|]/.test(raw)){m="These characters are removed from the folder name: \\ / : * ? \" < > |";b=false;}
  put(errs,"nm",m,b);
  const meta=type==="project";
- [["f-piemail",emailMsg],["f-piorcid",orcidMsg]].forEach(([id,f])=>put(errs,id,meta?f(V(id)):"",true));
+ [["f-piemail",emailMsg],["f-conemail",emailMsg],["f-piorcid",orcidMsg],["f-conorcid",orcidMsg]].forEach(([id,f])=>put(errs,id,meta?f(V(id)):"",true));
  put(errs,"f-date",meta&&$("#f-date").validity.badInput?"Enter a valid date.":"",true);
  return errs;}
 function refresh(){const {T,root}=info();$("#lbl").textContent=T.field;$("#nm").placeholder=T.ph;$("#hint").textContent=T.rootHint+(root?" Root folder: "+root+"/":"");
