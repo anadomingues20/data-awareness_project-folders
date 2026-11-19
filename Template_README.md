@@ -2,7 +2,7 @@
 
 This document is adapted from *Template_README_fileOrg* by MIT Libraries Data Management Service / Massachusetts Institute of Technology (MIT), available at [Original Source (Dropbox)](https://www.dropbox.com/scl/fi/7z3ax03buxzbu71wvomdp/Template_README_fileOrg.txt?rlkey=x82sddsi95o77g9o4fv4csdkk&dl=0), and licensed under the [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 
-The original content has been reorganised, edited and adapted to the context and needs of the Center of Biological Engineering (CEB), University of Minho.
+The original content has been reorganized, edited and adapted to the context and needs of the Center of Biological Engineering (CEB), University of Minho.
 
 **Access:** [CEB Data Awareness – Project Folders](https://github.com/anadomingues20/data-awareness_project-folders)
 
