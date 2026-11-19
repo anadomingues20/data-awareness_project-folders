@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Research Folder Structure Generator</title>
+<title>Research folder structure generator</title>
 <style>
 :root{--bg:#fafaf8;--fg:#1c1c1a;--mut:#6b6b66;--card:#fff;--bd:#d9d9d2;--ac:#1f6f5c;--acfg:#fff;--err:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--fg:#ecece8;--mut:#9a9a93;--card:#202020;--bd:#3a3a36;--ac:#4fb59c;--acfg:#10201b;--err:#f2928a}}
@@ -36,9 +36,9 @@ button.pri{font:inherit;background:var(--ac);color:var(--acfg);border:1px solid 
 </head>
 <body>
 <main>
-<h1>Research Folder Structure Generator</h1>
-<p class="sub">This tool helps you create a standard folder structure and a README for a research project or experiment. Everything runs in your browser; nothing is uploaded.</p>
-<p class="sub">Just fill in the form and click “Download ZIP”. You will get your new research folder structure, a README file with the documentation, and a tips file for good research data management, ready for your research data.</p>
+<h1>Research folder structure generator</h1>
+<p class="sub">Create a standard folder structure and a README for a research project or experiment. Everything runs in your browser; nothing is uploaded.</p>
+
 <div class="tabs" role="tablist">
 <button class="tab" role="tab" id="t-project" aria-selected="true">Project</button>
 <button class="tab" role="tab" id="t-experiment" aria-selected="false">Experiment</button>
@@ -51,19 +51,9 @@ button.pri{font:inherit;background:var(--ac);color:var(--acfg);border:1px solid 
 </div>
 
 <div class="card" id="meta">
-<h2 style="margin-bottom:10px">Project details</h2>
-<div class="g2">
-<div><label for="f-date">Date</label><input type="date" id="f-date"></div>
-<div><label for="f-pi">Principal Investigator (PI)</label><input type="text" id="f-pi"></div>
-<div><label for="f-piorcid">PI ORCID</label><input type="text" id="f-piorcid" placeholder="0000-0000-0000-0000"></div>
-<div><label for="f-piemail">PI email</label><input type="text" id="f-piemail"></div>
-<div><label for="f-con">Member</label><input type="text" id="f-con"></div>
-<div><label for="f-conorcid">Member ORCID</label><input type="text" id="f-conorcid" placeholder="0000-0000-0000-0000"></div>
-<div><label for="f-conemail">Member email</label><input type="text" id="f-conemail"></div>
-</div>
-<div style="margin-top:10px"><label for="f-desc">Description</label><textarea id="f-desc" rows="3"></textarea></div>
-<div style="margin-top:10px"><label for="f-contractor">Principal Contractor (institute, department, address; one line each)</label><textarea id="f-contractor" rows="4"></textarea></div>
-<p class="hint">Only the project name is required. These details are written at the top of the README.</p>
+<label for="f-pi">Principal Investigator (PI)</label>
+<input type="text" id="f-pi" placeholder="Name, institutional email" autocomplete="off">
+<p class="hint">Optional. It is written in the README and can be updated there later. Only the project name is required.</p>
 </div>
 
 <div class="card">
@@ -77,6 +67,186 @@ button.pri{font:inherit;background:var(--ac);color:var(--acfg);border:1px solid 
 <div class="bar"><button class="pri" id="go">Download ZIP</button><span id="msg"></span></div>
 </main>
 
+<script type="text/plain" id="tpl-project">
+# README, File & Folder Schema (Template)
+
+This document is adapted from *Template_README_fileOrg* by MIT Libraries Data Management Service / Massachusetts Institute of Technology (MIT), available at [Original Source (Dropbox)](https://www.dropbox.com/scl/fi/7z3ax03buxzbu71wvomdp/Template_README_fileOrg.txt?rlkey=x82sddsi95o77g9o4fv4csdkk&dl=0), and licensed under the [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+
+The original content has been reorganized, edited and adapted to the context and needs of the Center of Biological Engineering (CEB), University of Minho.
+
+**Access:** [CEB Data Awareness – Project Folders](https://github.com/anadomingues20/data-awareness_project-folders)
+
+**Related files:** `README_template` and `file_naming_tips` are available in the same GitHub repository.
+
+# TITLE [version] object [link] by AUTHOR [link] 
+
+Copyright © date OWNER [link] is licensed under LICENSE [link]. Extra  attribution requirements of copyright holder. Access at LINK
+
+## Overview
+
+Project/Lab Name: {{PROJECT_NAME}}
+
+Creator: Who created the file organization schema? This is important information as a user may need to get clarification, suggest a revision of the schema, etc. Include the institution/address/email for contacting this person. 
+Ex: Human AT Lab, humanatlab@ceb.uminho.pt
+
+Owner: This may be the same as the creator, but you should indicate who is currently responsible for maintaining this file organization schema? This person can change as people leave/arrive. Again, include institution/address/email for contacting this person. 
+Ex: Human AT Lab Supervisor, humanatlabsupervisor@ceb.uminho.pt
+
+Date of last update: Indicate when the last changes of this schema were made. In some instances, it may be useful to keep a log of the revision history. Ex: 2018-02-12
+OR 
+
+Revision history:
+
+|Date      |Revising person         |Revision notes         |
+|----------|------------------------|-----------------------|
+|2026-11-12|Human AT Lab            |added example content  |
+|2026-11-31|Human AT Lab Supervisor |created readME document|
+
+
+Files location: Where are the files referenced here kept? Include a file path so people can easily find the necessary files. If there are permission restrictions, you may also want to include that information. 
+Ex: .../LabX/project123/
+
+README location: Include the file path for this particular README. This may seem superfluous, but often READMEs are shared outside of their home location (e.g., via email), so it’s good to indicate where the README can be found. 
+Ex: .../LabX/project123/
+
+## Data Ownership, Authorship and Licensing
+
+This section documents the people and organizations involved in generating, managing and maintaining the research data, as well as the conditions under which the data can be accessed, shared and reused. Complete the fields that apply to your project. If a role or license is not applicable or has not been assigned, indicate this rather than making assumptions.
+
+### Data Creators and Contributors
+
+Identify the individuals who generated, collected, processed or otherwise contributed to the research data. Describe their contributions as clearly as possible.
+
+| Name      | ORCID           | Affiliation              | Contribution / Role  |
+|-----------|-----------------|--------------------------|----------------------|
+| Full name | ORCID ID or N/A | Institution / Department | e.g. data collection |
+| Full name | ORCID ID or N/A | Institution / Department | e.g. data processing |
+| Full name | ORCID ID or N/A | Institution / Department | e.g. data analysis   |
+
+### Project Responsibility
+
+**Principal Investigator (PI):** {{PI|Name and institutional email of the person responsible for the scientific direction of the project.}}
+
+**Data Manager / Data Steward:** Name and institutional email of the person coordinating data management activities, if applicable.
+
+**Data Custodian:** Name and institutional email of the person or team responsible for maintaining the data and overseeing access to them, if applicable.
+
+### Data Ownership and Rights
+
+**Rights holder:** Identify the person(s) or organization(s) holding the relevant intellectual property rights or other applicable rights over the data or database, where known.
+
+**Institutional affiliation:** Institution(s) associated with the generation and management of the data.
+
+**Funding source:** Identify the project or funding programme, including the grant reference, where applicable.
+
+**Important:** Data creators, the Principal Investigator, the data custodian and the rights holder may be different people or organizations. Rights and ownership may depend on institutional policies, funding conditions, collaboration agreements and applicable legislation. If the rights holder is unclear, seek guidance from the relevant institutional office before assigning a license or sharing the data.
+
+### Access and Sharing Conditions
+
+**Access level:** Specify the conditions under which the data can be accessed.
+
+Examples:
+- Open access
+- Restricted access
+- Embargoed access
+- Confidential / Internal access
+
+**Access restrictions:** Describe any restrictions related to confidentiality, personal data, ethical approvals, consent forms, collaboration agreements or other applicable requirements.
+
+**Access procedure:** If access is restricted, explain whom to contact and how access can be requested.
+
+### Data Licence
+
+**License:** Specify the license under which the data can be shared and reused, if applicable.
+
+**License URL:** Provide a link to the full license terms.
+
+**Additional requirements:** Specify any attribution requirements or other conditions for reuse.
+
+If no license has been assigned, state this explicitly. Do not assume that data are openly reusable simply because they are stored in a shared location or repository. Check that the person or organization assigning the license has the authority to do so.
+
+## Folder structure: 
+
+Describe your folder structure. If necessary, insert a screenshot showing the folder hierarchy. If including a screenshot, expand all folders to show the full structure. It is recommended to use the "Research Folder Structure Generator" tool to create a standardized project folder structure.
+
+{{FOLDER_STRUCTURE}}
+
+## Folder descriptions
+
+{{FOLDER_DESCRIPTIONS}}
+
+
+## File naming schema:
+
+### File type: [example] Microscope image
+Filename schema: [date]_[specimen]_[microscope]_[signal]_[number]
+Schema key: 	
+
+- date: date of image capture in YYYYMMDD format
+- specimen: cell line name (abbreviations: mutant “mut”, wild type “wt”)
+- microscope: name/model of microscope used (abbreviations: Zeiss laser scanning confocal “ZSlsconf”, Leica spinning disk confocal “LCspindsk”)
+- signal: source of light or dye selected (abbreviations: green fluorescent protein “GFP”, Alexa350)
+- imageNumber: written in sequential formatting 00X-XXX
+
+Example filename: 20210623_NIH3T3mut_lsconf23_GFP_001.tiff
+
+[Repeat this information for each of your file types]
+
+### File type:
+Filename schema:
+Schema key:
+
+- xxx
+- xxx
+- xxx
+
+Example filename:
+
+### File type:
+Filename schema:
+Schema key:
+
+- xxx
+- xxx
+- xxx
+
+Example filename:
+
+### File type:
+Filename schema:
+Schema key:
+
+- xxx
+- xxx
+- xxx
+
+
+## Filename abbreviations:
+Use this section to document any abbreviations used in the file-naming schemes described above. 
+
+- Ex. specimen (name)
+	- mut: mutant
+	- wt: wild type
+- Ex. Microscope (name)
+	- ZSlsconf1.12: Zeiss laser scanning confocal, located in room 1.12
+	- “LCspindsk” Leica spinning disk confocal 
+	
+
+[Repeat this information for each of your filename descriptors]
+
+- Filename descriptor
+	- Abbreviation key
+	- Abbreviation key
+	- Abbreviation key
+- Filename descriptor
+	- Abbreviation key
+	- Abbreviation key
+	- Abbreviation key
+
+	
+[Save your README as a Markdown file (README.md), a non-proprietary format, and store it in the root folder of the project where it is accessible to the relevant team members. Review and update it whenever necessary.]
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 // Each node: [folder name without number, description, optional children]
@@ -88,7 +258,7 @@ const PROJECT=[
 ["ethics-governance","Ethics and governance documentation.",[
  ["ethics-approval","Ethics applications and approvals."],
  ["consent-forms","Consent forms."]]],
-["experiments","One folder for each experiment of the project."],
+["experiments","One folder for each experiment in the project. Use the \"Research Folder Structure Generator\" to create a new folder for each experiment."],
 ["data-management","Documents and files related to data management."],
 ["dissemination","Material for sharing the work of the project.",[
  ["presentations","Presentations.",[
@@ -136,47 +306,27 @@ function addFolders(z,nodes){nodes.forEach(n=>{const f=z.folder(n[0]);if(n[2])ad
 
 function info(){const T=TYPES[type],raw=$("#nm").value.trim(),c=clean(raw);return{T,raw,root:c?T.root(c):null,tree:chosen(T.tree)};}
 const V=id=>$("#"+id).value.trim();
-const ml=t=>t.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).join("  \n");
-function field(h,v,hint){return "# "+h+"\n"+(v?v+"  \n":"")+"("+hint+")\n";}
-function projectHead(name){return [
- "# Title\n# "+name+"\n(The name given to the project.)\n",
- field("Date",V("f-date"),"A date associated with the creation or availability of the resource. Recommended format: YYYY-MM-DD"),
- field("Description",ml($("#f-desc").value),"A textual description of the content of the resource."),
- field("Principal Investigator (PI)",ml($("#f-pi").value),"Primarily responsible for the project. Can be a repetitive list of authors, artists, collectors, organizations etc."),
- field("PI.ORCID",normOrcid(V("f-piorcid")),"ORCID identifier of the Principal Investigator"),
- field("PI.Email",V("f-piemail"),"email identifier of the Principal Investigator"),
- field("Principal Contractor",ml($("#f-contractor").value),"The department/institute responsible for the project."),
- field("Member",ml($("#f-con").value),"Who contributed to the resource/project and edit this document "),
- field("Member.ORCID",normOrcid(V("f-conorcid")),"ORCID identifier of the Member"),
- field("Member.Email",V("f-conemail"),"Email identifier of the Member")
- ].join("\n");}
-function mdRows(nodes,path){const o=[];nodes.forEach(n=>{const p=path+n[0]+"/";o.push("| `"+p+"` | "+n[1]+" |");if(n[2])o.push(...mdRows(n[2],p));});return o;}
-function tail(name,root,tree){return ["This folder contains the "+type+"-level folder structure for **"+name+"**.","","## Naming scheme","","Folders are named `NN-content`:","","- `NN` is a two-digit index used to sort the folders.","- `content` describes what the folder contains, with words separated by hyphens.",...(type==="experiment"?["","The root folder is named `Experiment_` followed by the experiment name."]:[]),"","## Folder structure","","```",root+"/",...treeLines(tree,""),"```","","## Folder descriptions","","| Folder | Description |","| --- | --- |",...mdRows(tree,"")].join("\n")+"\n";}
+function treeDesc(nodes,pre){const o=[];nodes.forEach((n,i)=>{const last=i===nodes.length-1;o.push([pre+(last?"└── ":"├── ")+n[0]+"/",n[1]]);if(n[2])o.push(...treeDesc(n[2],pre+(last?"    ":"│   ")));});return o;}
+function treeBlock(root,tree){const rows=treeDesc(tree,""),w=Math.max(0,...rows.map(r=>r[0].length))+3;return [root+"/",...rows.map(r=>r[0].padEnd(w)+"<- "+r[1])];}
+function tail(name,root,tree){return ["This folder contains the "+type+"-level folder structure for **"+name+"**.","","## Naming scheme","","Folders are named `NN-content`:","","- `NN` is a two-digit index used to sort the folders.","- `content` describes what the folder contains, with words separated by hyphens.",...(type==="experiment"?["","The root folder is named `Experiment_` followed by the experiment name."]:[]),"","## Folder structure","","```",root+"/",...treeLines(tree,""),"```","","## Folder descriptions","","```",...treeBlock(root,tree),"```"].join("\n")+"\n";}
+// The project README comes from the template in <script id="tpl-project">; only these placeholders are replaced.
+function projectReadme(root,tree,name,pi){const tpl=document.getElementById("tpl-project").textContent.replace(/^\n/,"").replace(/\r\n/g,"\n");
+ const struct=["```",root+"/",...treeLines(tree,""),"```"].join("\n"),desc=["```",...treeBlock(root,tree),"```"].join("\n");
+ return tpl.split("{{FOLDER_STRUCTURE}}").join(struct).split("{{FOLDER_DESCRIPTIONS}}").join(desc).split("{{PROJECT_NAME}}").join(name).replace(/\{\{PI\|(.*?)\}\}/g,(m,d)=>pi||d).replace(/\n+$/,"")+"\n";}
 function readme(){const {T,raw,root,tree}=info(),r=root||T.root("<name>"),name=raw||"<"+T.label+" name>";
- if(type==="project")return projectHead(name)+"\n\n"+tail(name,r,tree);
+ if(type==="project")return projectReadme(r,tree,name,V("f-pi"));
  return "# Title\n# "+name+"\n\nCreated: "+new Date().toISOString().slice(0,10)+"\n\n"+tail(name,r,tree);}
 function list(nodes,box,depth){let i=0;nodes.forEach(n=>{const on=isSel(n.id);if(on)i++;
  const lab=document.createElement("label");lab.className="it";lab.style.marginLeft=(depth*20)+"px";lab.title=n.desc;
  const cb=document.createElement("input");cb.type="checkbox";cb.checked=on;cb.onchange=()=>{onToggle(n,cb.checked);refresh();};
  const sp=document.createElement("span");sp.textContent=(on?pad(i)+"-":"")+n.base+"/";if(!on)sp.className="off";
  lab.append(cb,sp);box.appendChild(lab);list(n.kids,box,depth+1);});}
-const normOrcid=v=>v.replace(/^https?:\/\/(www\.)?orcid\.org\//i,"").trim().toUpperCase();
-function orcidMsg(v){if(!v)return "";const id=normOrcid(v);
- if(!/^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(id))return "Use the format 0000-0000-0000-0000 (the last character can be X).";
- const d=id.replace(/-/g,"");let t=0;for(let i=0;i<15;i++)t=(t+Number(d[i]))*2;
- const r=(12-t%11)%11,c=r===10?"X":String(r);
- return c===d[15]?"":"This ORCID iD is not valid: the check digit does not match.";}
-const EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const emailMsg=v=>!v||EMAIL.test(v)?"":"Enter a valid email address, for example name@domain.org.";
 function errEl(id){let e=document.getElementById("e-"+id);if(!e){e=document.createElement("div");e.id="e-"+id;e.className="err";e.setAttribute("role","alert");$("#"+id).insertAdjacentElement("afterend",e);}return e;}
 function put(errs,id,m,blocking){const e=errEl(id);e.textContent=m;e.style.color=blocking?"":"var(--mut)";$("#"+id).classList.toggle("bad",!!(m&&blocking));if(m&&blocking)errs.push({id:id,msg:m});}
 function validate(){const errs=[],raw=$("#nm").value;let m="",b=true;
  if(raw.trim()&&!clean(raw))m="The name has no characters that can be used in a folder name.";
  else if(/[\\\/:*?"<>|]/.test(raw)){m="These characters are removed from the folder name: \\ / : * ? \" < > |";b=false;}
  put(errs,"nm",m,b);
- const meta=type==="project";
- [["f-piemail",emailMsg],["f-conemail",emailMsg],["f-piorcid",orcidMsg],["f-conorcid",orcidMsg]].forEach(([id,f])=>put(errs,id,meta?f(V(id)):"",true));
- put(errs,"f-date",meta&&$("#f-date").validity.badInput?"Enter a valid date.":"",true);
  return errs;}
 function refresh(){const {T,root}=info();$("#lbl").textContent=T.field;$("#nm").placeholder=T.ph;$("#hint").textContent=T.rootHint+(root?" Root folder: "+root+"/":"");
  const box=$("#list");box.innerHTML="";list(T.tree,box,0);$("#meta").style.display=type==="project"?"":"none";$("#prev").textContent=readme();validate();}
@@ -184,7 +334,6 @@ function setType(t){type=t;Object.keys(TYPES).forEach(k=>$("#t-"+k).setAttribute
 Object.keys(TYPES).forEach(k=>$("#t-"+k).onclick=()=>setType(k));
 $("#nm").addEventListener("input",refresh);
 document.querySelectorAll("#meta input,#meta textarea").forEach(x=>x.addEventListener("input",refresh));
-$("#f-date").value=new Date().toISOString().slice(0,10);
 $("#all").onclick=()=>{TYPES[type].tree.forEach(n=>setDown(n,true));refresh();};
 $("#none").onclick=()=>{TYPES[type].tree.forEach(n=>setDown(n,false));refresh();};
 
