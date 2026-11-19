@@ -31,10 +31,27 @@ When creating file names:
 
 A useful general format is:
 
-`project-name_sample_datatype_date_description_version.extension`
-`2013-06-26_BRAFWTNEGASSAY_Plasmid-Cellline-100-1MutantFraction_A01.csv`
+`data_project-name-type-of-document_version.extension`
+`2026-10-26_bacterialX_consent-form-approved_v01.docx`
 
-For example:
+or 
+
+`project_sample_analysis_reference_date_version.extension`
+`bacterialX_sample001_variantcalling_refNC_014246_20261117_v001.vcf.gz`
+where
+----------------------------------------------------------------------------------------
+Field        Value             Description
+----------------------------------------------------------------------------------------
+project      bacterialX        Project name or acronym
+sample       sample001         Unique sample identifier
+analysis     variantcalling    Type of analysis performed
+reference    refNC_014246      Reference genome identifier
+date         20261117          Date associated with file generation (YYYYMMDD)
+version      v001              File or result version
+extension    .vcf.gz           File format: Variant Call Format compressed with gzip
+----------------------------------------------------------------------------------------
+
+Other examples:
 
 ``` text
 microbiome_sample001_metagenomics_20261110_raw.fastq.gz
