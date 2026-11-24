@@ -19,10 +19,10 @@ Adapted by the Center of Biological Engineering (CEB), University of Minho.
 Project/Lab Name: Name the project for which this file organization documentation refers. If it documents the organization schema for a research/lab group, include that here. 
 Ex: LabX, Project 123
 
-Creator: Who created the file organization schema? This is important information as a user may need to get clarification, suggest a revision of the schema, etc. Include the institution/address/email for contacting this person. 
-Ex: Human AT Lab, humanatlab@ceb.uminho.pt
+Creator: Person who created this project folder structure and README file (name, institution and email).
+Ex: Jane Doe, Human AT Lab, jane.doe@ceb.uminho.pt
 
-Owner: This may be the same as the creator, but you should indicate who is currently responsible for maintaining this file organization schema? This person can change as people leave/arrive. Again, include institution/address/email for contacting this person. 
+Maintainer: Who is currently responsible for maintaining this project folder structure and README file? This is the contact for clarification, further information or suggested revisions, and can change over time. Include name, institution and email.
 Ex: Human AT Lab Supervisor, humanatlabsupervisor@ceb.uminho.pt
 
 Date of last update: Indicate when the last changes of this schema were made. In some instances, it may be useful to keep a log of the revision history. Ex: 2018-02-12
@@ -100,7 +100,7 @@ If no license has been assigned, state this explicitly. Do not assume that data 
 
 ## Folder structure: 
 
-Describe your folder structure. If necessary, insert a screenshot showing the folder hierarchy. If including a screenshot, expand all folders to show the full structure. It is recommended to use the "Research Folder Structure Generator" tool to create a standardized project folder structure.
+This structure was created with the `Research Folder Structure Generator`. Update it if you add, rename or remove folders.
 
 ```
 <name>/
@@ -155,7 +155,7 @@ Schema key:
 - specimen: cell line name (abbreviations: mutant “mut”, wild type “wt”)
 - microscope: name/model of microscope used (abbreviations: Zeiss laser scanning confocal “ZSlsconf”, Leica spinning disk confocal “LCspindsk”)
 - signal: source of light or dye selected (abbreviations: green fluorescent protein “GFP”, Alexa350)
-- imageNumber: written in sequential formatting 00X-XXX
+- number: sequential image number with three digits and leading zeros (001 to 999)
 
 Example filename: 20210623_NIH3T3mut_lsconf23_GFP_001.tiff
 
