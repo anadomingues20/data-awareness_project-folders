@@ -1,16 +1,18 @@
-# README, File & Folder Schema (Template)
+# README, File & Folder project Schema (Template)
 
 This document is adapted from *Template_README_fileOrg* by MIT Libraries Data Management Service / Massachusetts Institute of Technology (MIT), available at [Original Source (Dropbox)](https://www.dropbox.com/scl/fi/7z3ax03buxzbu71wvomdp/Template_README_fileOrg.txt?rlkey=x82sddsi95o77g9o4fv4csdkk&dl=0), and licensed under the [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 
-The original content has been reorganized, edited and adapted to the context and needs of the Center of Biological Engineering (CEB), University of Minho.
+-------------------------------------------------------------------------------------------------
+The original content has been reorganized, edited and adapted to the context and needs of the Center of Biological Engineering (CEB), University of Minho. 
+Adapted by the Center of Biological Engineering (CEB), University of Minho.
 
 **Access:** [CEB Data Awareness – Project Folders](https://github.com/anadomingues20/data-awareness_project-folders)
 
-**Related files:** `README_template` and `file_naming_tips` are available in the same GitHub repository.
+**Related files:** `template_README.md` and `file_naming_tips.md` will be included in this folder, and also available in the GitHub repository.
 
-# TITLE [version] object [link] by AUTHOR [link] 
+-------------------------------------------------------------------------------------------------
 
-Copyright © date OWNER [link] is licensed under LICENSE [link]. Extra  attribution requirements of copyright holder. Access at LINK
+
 
 ## Overview
 
@@ -31,7 +33,7 @@ Revision history:
 |Date      |Revising person         |Revision notes         |
 |----------|------------------------|-----------------------|
 |2026-11-12|Human AT Lab            |added example content  |
-|2026-11-31|Human AT Lab Supervisor |created readME document|
+|2026-11-3 |Human AT Lab Supervisor |created readME document|
 
 
 Files location: Where are the files referenced here kept? Include a file path so people can easily find the necessary files. If there are permission restrictions, you may also want to include that information. 
@@ -86,7 +88,7 @@ Examples:
 
 **Access procedure:** If access is restricted, explain whom to contact and how access can be requested.
 
-### Data Licence
+### Data License
 
 **License:** Specify the license under which the data can be shared and reused, if applicable.
 
@@ -120,7 +122,7 @@ Describe your folder structure. If necessary, insert a screenshot showing the fo
     └── 04-publicity/
 ```
 
-## Folder descriptions
+## Folder descriptions:
 
 ```
 <name>/
