@@ -12,37 +12,101 @@ Adapted by the Center of Biological Engineering (CEB), University of Minho.
 
 -------------------------------------------------------------------------------------------------
 
-
-
 ## Overview
 
-Project/Lab Name: Name the project for which this file organization documentation refers. If it documents the organization schema for a research/lab group, include that here. 
-Ex: LabX, Project 123
+Project Name: Name the project for which this file organization documentation refers. 
+Ex: Project 123
 
 Creator: Person who created this project folder structure and README file (name, institution and email).
 Ex: Jane Doe, Human AT Lab, jane.doe@ceb.uminho.pt
 
-Maintainer: Who is currently responsible for maintaining this project folder structure and README file? This is the contact for clarification, further information or suggested revisions, and can change over time. Include name, institution and email.
+Description: This project folder structure was created to help organize documentation and data of the project. Its structure and documentation are in line FAIR principal.  
+
+---
+
+## Part 1 — About this README
+
+> This part describes this README document: who maintains it and how it has changed. It does not describe the folder structure or the data.
+
+README file maintainer: Person who is currently responsible for maintaining this README file. This is the contact for clarification, further information or suggested revisions of this README, and can change over time. Include name, institution and email.
 Ex: Human AT Lab Supervisor, humanatlabsupervisor@ceb.uminho.pt
 
-Date of last update: Indicate when the last changes of this schema were made. In some instances, it may be useful to keep a log of the revision history. Ex: 2018-02-12
-OR 
 
 Revision history:
-
+Indicate when the last changes of this schema were made. In some instances, it may be useful to keep a log of the revision history.
 |Date      |Revising person         |Revision notes         |
 |----------|------------------------|-----------------------|
 |2026-11-12|Human AT Lab            |added example content  |
-|2026-11-3 |Human AT Lab Supervisor |created readME document|
-
-
-Files location: Where are the files referenced here kept? Include a file path so people can easily find the necessary files. If there are permission restrictions, you may also want to include that information. 
-Ex: .../LabX/project123/
+|2026-11-3 |Human AT Lab Creator    |created readME document|
 
 README location: Include the file path for this particular README. This may seem superfluous, but often READMEs are shared outside of their home location (e.g., via email), so it’s good to indicate where the README can be found. 
 Ex: .../LabX/project123/
 
-## Data Ownership, Authorship and Licensing
+**Warning** This README must be updated whenever the folder structure changes (when folders are added, renamed, moved or removed)!
+
+---
+
+## Part 2 — Folder structure
+
+> This part describes how the project folders and files are organized. It does not describe the README document or the data ownership.
+
+Files location: Where are the files referenced here kept? Include a file path so people can easily find the necessary files. If there are permission restrictions, you may also want to include that information. 
+Ex: .../LabX/project123/
+
+Folder structure maintainer: Who is currently responsible for maintaining this project folder structure? This is the contact for questions about the folders and files, and for suggested changes to the structure. It can be the same person as the README maintainer. Include name, institution and email.
+Ex: Human AT Lab Manager, humanatlabmanager@ceb.uminho.pt
+
+### Folder structure: 
+
+This structure was created with the `Research Folder Structure Generator`. Update it if you add, rename or remove folders.
+
+```
+<name>/
+├── 01-project-management/
+│   ├── 01-proposals/
+│   ├── 02-finance/
+│   └── 03-reports/
+├── 02-ethics-governance/
+│   ├── 01-ethics-approval/
+│   └── 02-consent-forms/
+├── 03-experiments/
+├── 04-data-management/
+└── 05-dissemination/
+    ├── 01-presentations/
+    │   ├── 01-lab-meeting/
+    │   └── 02-conferences/
+    ├── 02-publications/
+    ├── 03-poster/
+    └── 04-publicity/
+```
+
+### Folder descriptions:
+
+```
+<name>/
+├── 01-project-management/    <- Planning and administration of the project.
+│   ├── 01-proposals/         <- Project proposals and applications.
+│   ├── 02-finance/           <- Budgets, expenses and other financial documents.
+│   └── 03-reports/           <- Progress and reports.
+├── 02-ethics-governance/     <- Ethics and governance documentation.
+│   ├── 01-ethics-approval/   <- Ethics applications and approvals.
+│   └── 02-consent-forms/     <- Consent forms.
+├── 03-experiments/           <- One folder for each experiment in the project. Use the "Research Folder Structure Generator" to create a new folder for each experiment.		
+├── 04-data-management/       <- Documents and files related to data management.
+└── 05-dissemination/         <- Material for sharing the work of the project.
+    ├── 01-presentations/     <- Presentations.
+    │   ├── 01-lab-meeting/   <- Presentations in lab meetings.
+    │   └── 02-conferences/   <- Presentations for conferences.
+    ├── 02-publications/      <- Publications and manuscripts.
+    ├── 03-poster/            <- Posters.
+    └── 04-publicity/         <- Publicity material.
+```
+
+---
+
+## Part 3 — Data ownership, authorship and licensing
+
+> This part describes the research data: who created them, who is responsible for them, who holds rights over them and under which conditions they can be accessed and reused. It does not describe the README document or the folder structure.
 
 This section documents the people and organizations involved in generating, managing and maintaining the research data, as well as the conditions under which the data can be accessed, shared and reused. Complete the fields that apply to your project. If a role or license is not applicable or has not been assigned, indicate this rather than making assumptions.
 
@@ -50,11 +114,11 @@ This section documents the people and organizations involved in generating, mana
 
 Identify the individuals who generated, collected, processed or otherwise contributed to the research data. Describe their contributions as clearly as possible.
 
-| Name      | ORCID           | Affiliation              | Contribution / Role  |
-|-----------|-----------------|--------------------------|----------------------|
-| Full name | ORCID ID or N/A | Institution / Department | e.g. data collection |
-| Full name | ORCID ID or N/A | Institution / Department | e.g. data processing |
-| Full name | ORCID ID or N/A | Institution / Department | e.g. data analysis   |
+| Name      | ORCID           | Affiliation              | Contribution / Role         |
+|-----------|-----------------|--------------------------|-----------------------------|
+| Full name | ORCID ID or N/A | Institution / Department | e.g. data collection        |
+| Full name | ORCID ID or N/A | Institution / Department | e.g. data processing        |
+| Full name | ORCID ID or N/A | Institution / Department | e.g. data analysis          |
 
 ### Project Responsibility
 
@@ -98,119 +162,6 @@ Examples:
 
 If no license has been assigned, state this explicitly. Do not assume that data are openly reusable simply because they are stored in a shared location or repository. Check that the person or organization assigning the license has the authority to do so.
 
-## Folder structure: 
+---
 
-This structure was created with the `Research Folder Structure Generator`. Update it if you add, rename or remove folders.
-
-```
-<name>/
-├── 01-project-management/
-│   ├── 01-proposals/
-│   ├── 02-finance/
-│   └── 03-reports/
-├── 02-ethics-governance/
-│   ├── 01-ethics-approval/
-│   └── 02-consent-forms/
-├── 03-experiments/
-├── 04-data-management/
-└── 05-dissemination/
-    ├── 01-presentations/
-    │   ├── 01-lab-meeting/
-    │   └── 02-conferences/
-    ├── 02-publications/
-    ├── 03-poster/
-    └── 04-publicity/
-```
-
-## Folder descriptions:
-
-```
-<name>/
-├── 01-project-management/    <- Planning and administration of the project.
-│   ├── 01-proposals/         <- Project proposals and applications.
-│   ├── 02-finance/           <- Budgets, expenses and other financial documents.
-│   └── 03-reports/           <- Progress and reports.
-├── 02-ethics-governance/     <- Ethics and governance documentation.
-│   ├── 01-ethics-approval/   <- Ethics applications and approvals.
-│   └── 02-consent-forms/     <- Consent forms.
-├── 03-experiments/           <- One folder for each experiment in the project. Use the "Research Folder Structure Generator" to create a new folder for each experiment.		
-├── 04-data-management/       <- Documents and files related to data management.
-└── 05-dissemination/         <- Material for sharing the work of the project.
-    ├── 01-presentations/     <- Presentations.
-    │   ├── 01-lab-meeting/   <- Presentations in lab meetings.
-    │   └── 02-conferences/   <- Presentations for conferences.
-    ├── 02-publications/      <- Publications and manuscripts.
-    ├── 03-poster/            <- Posters.
-    └── 04-publicity/         <- Publicity material.
-```
-
-
-## File naming schema:
-
-### File type: [example] Microscope image
-Filename schema: [date]_[specimen]_[microscope]_[signal]_[number]
-Schema key: 	
-
-- date: date of image capture in YYYYMMDD format
-- specimen: cell line name (abbreviations: mutant “mut”, wild type “wt”)
-- microscope: name/model of microscope used (abbreviations: Zeiss laser scanning confocal “ZSlsconf”, Leica spinning disk confocal “LCspindsk”)
-- signal: source of light or dye selected (abbreviations: green fluorescent protein “GFP”, Alexa350)
-- number: sequential image number with three digits and leading zeros (001 to 999)
-
-Example filename: 20210623_NIH3T3mut_lsconf23_GFP_001.tiff
-
-[Repeat this information for each of your file types]
-
-### File type:
-Filename schema:
-Schema key:
-
-- xxx
-- xxx
-- xxx
-
-Example filename:
-
-### File type:
-Filename schema:
-Schema key:
-
-- xxx
-- xxx
-- xxx
-
-Example filename:
-
-### File type:
-Filename schema:
-Schema key:
-
-- xxx
-- xxx
-- xxx
-
-
-## Filename abbreviations:
-Use this section to document any abbreviations used in the file-naming schemes described above. 
-
-- Ex. specimen (name)
-	- mut: mutant
-	- wt: wild type
-- Ex. Microscope (name)
-	- ZSlsconf1.12: Zeiss laser scanning confocal, located in room 1.12
-	- “LCspindsk” Leica spinning disk confocal 
-	
-
-[Repeat this information for each of your filename descriptors]
-
-- Filename descriptor
-	- Abbreviation key
-	- Abbreviation key
-	- Abbreviation key
-- Filename descriptor
-	- Abbreviation key
-	- Abbreviation key
-	- Abbreviation key
-
-	
 [Save your README as a Markdown file (README.md), a non-proprietary format, and store it in the root folder of the project where it is accessible to the relevant team members. Review and update it whenever necessary.]
