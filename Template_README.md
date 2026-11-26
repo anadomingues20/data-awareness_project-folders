@@ -20,7 +20,7 @@ Ex: Project 123
 Creator: Person who created this project folder structure and README file (name, institution and email).
 Ex: Jane Doe, Human AT Lab, jane.doe@ceb.uminho.pt
 
-Description: This project folder structure was created to help organize documentation and data of the project. Its structure and documentation are in line FAIR principal.  
+Description: This project folder structure was created to help organize documentation and data of the project. Its structure and documentation were designed to support the FAIR principles
 
 ---
 
@@ -31,18 +31,17 @@ Description: This project folder structure was created to help organize document
 README file maintainer: Person who is currently responsible for maintaining this README file. This is the contact for clarification, further information or suggested revisions of this README, and can change over time. Include name, institution and email.
 Ex: Human AT Lab Supervisor, humanatlabsupervisor@ceb.uminho.pt
 
+Revision history: Indicate when the last changes of this schema were made. In some instances, it may be useful to keep a log of the revision history.
 
-Revision history:
-Indicate when the last changes of this schema were made. In some instances, it may be useful to keep a log of the revision history.
-|Date      |Revising person         |Revision notes         |
-|----------|------------------------|-----------------------|
-|2026-11-12|Human AT Lab            |added example content  |
-|2026-11-3 |Human AT Lab Creator    |created readME document|
+|Date      |Revising person         |Revision notes                         |
+|----------|------------------------|---------------------------------------|
+|2026-11-12|Human AT Lab            |review and update the folder structure |
+|2026-11-03|Human AT Lab Creator    |created readME document                |
 
 README location: Include the file path for this particular README. This may seem superfluous, but often READMEs are shared outside of their home location (e.g., via email), so it’s good to indicate where the README can be found. 
 Ex: .../LabX/project123/
 
-**Warning** This README must be updated whenever the folder structure changes (when folders are added, renamed, moved or removed)!
+**Warning:** This README must be updated whenever the folder structure changes (when folders are added, renamed, moved or removed)!
 
 ---
 
@@ -53,7 +52,7 @@ Ex: .../LabX/project123/
 Files location: Where are the files referenced here kept? Include a file path so people can easily find the necessary files. If there are permission restrictions, you may also want to include that information. 
 Ex: .../LabX/project123/
 
-Folder structure maintainer: Who is currently responsible for maintaining this project folder structure? This is the contact for questions about the folders and files, and for suggested changes to the structure. It can be the same person as the README maintainer. Include name, institution and email.
+Folder structure maintainer: Folder structure maintainer: Person who is currently responsible for maintaining this project folder structure. This is the contact for questions about the folders and files, and for suggested changes to the structure. It can be the same person as the README file maintainer. Include name, institution and email.
 Ex: Human AT Lab Manager, humanatlabmanager@ceb.uminho.pt
 
 ### Folder structure: 
