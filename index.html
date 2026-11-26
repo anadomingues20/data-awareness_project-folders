@@ -32,6 +32,14 @@ pre{margin:0;white-space:pre;overflow-x:auto;font:12.5px/1.45 ui-monospace,Conso
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 button.pri{font:inherit;background:var(--ac);color:var(--acfg);border:1px solid var(--ac);border-radius:8px;padding:10px 18px;font-weight:600;cursor:pointer}
 #msg{color:var(--mut);font-size:13px}
+details.card>summary{cursor:pointer;font-weight:600;font-size:15px}
+details.card[open]>summary{margin-bottom:10px}
+.fldt{margin:0 0 14px}.fl{font-size:13.5px;font-weight:600;margin-bottom:4px}
+.fld{min-width:0}.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.ctrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:8px;align-items:end;margin-bottom:8px}
+@media(max-width:620px){.ctrow{grid-template-columns:1fr}}
+select{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg);font:inherit}
+input:disabled{opacity:.6}
 </style>
 </head>
 <body>
@@ -47,19 +55,16 @@ button.pri{font:inherit;background:var(--ac);color:var(--acfg);border:1px solid 
 <div class="card">
 <label for="nm" id="lbl">Project name</label>
 <input type="text" id="nm" autocomplete="off">
+<p class="hint">Required. Use only letters, numbers, hyphens (-) and underscores (_), as recommended in the file naming tips. Spaces become hyphens.</p>
 <p class="hint" id="hint"></p>
 </div>
 
-<div class="card" id="meta">
-<label for="f-pi">Principal Investigator (PI)</label>
-<input type="text" id="f-pi" placeholder="Name, institutional email" autocomplete="off">
-<p class="hint">Optional. It is written in the README and can be updated there later. Only the project name is required.</p>
-</div>
+<div id="meta"></div>
 
 <div class="card">
 <div class="head"><h2>Folders to include</h2><div><button class="sm" id="all">Select all</button><button class="sm" id="none">Clear all</button></div></div>
 <div id="list"></div>
-<p class="hint">Folders are numbered automatically in the order of the selected folders. Unchecking a folder also unchecks its subfolders.</p>
+<p class="hint" id="fhint"></p>
 </div>
 
 <div class="card"><div class="head"><h2>README preview</h2></div><pre id="prev"></pre></div>
@@ -84,7 +89,141 @@ Adapted by the Center of Biological Engineering (CEB), University of Minho.
 
 ## Overview
 
-Project Name: {{PROJECT_NAME}}
+Project Name: {{F:project}}Name the project for which this file organization documentation refers. 
+Ex: Project 123{{/F}}
+
+Creator: {{F:creator}}Person who created this project folder structure and README file (name, institution and email).
+Ex: Jane Doe, Human AT Lab, jane.doe@ceb.uminho.pt{{/F}}
+
+Description: This project folder structure was created to help organize documentation and data of the project. Its structure and documentation were designed to support the FAIR principles
+
+---
+
+## Part 1 — About this README
+
+> This part describes this README document: who maintains it and how it has changed. It does not describe the folder structure or the data.
+
+README file maintainer: {{F:rm}}Person who is currently responsible for maintaining this README file. This is the contact for clarification, further information or suggested revisions of this README, and can change over time. Include name, institution and email.
+Ex: Human AT Lab Supervisor, humanatlabsupervisor@ceb.uminho.pt{{/F}}
+
+Revision history: Indicate when the last changes of this schema were made. In some instances, it may be useful to keep a log of the revision history.
+
+|Date      |Revising person         |Revision notes                         |
+|----------|------------------------|---------------------------------------|
+{{F:rev}}|2026-11-12|Human AT Lab            |review and update the folder structure |
+|2026-11-03|Human AT Lab Creator    |created readME document                |{{/F}}
+
+README location: {{F:loc}}Include the file path for this particular README. This may seem superfluous, but often READMEs are shared outside of their home location (e.g., via email), so it’s good to indicate where the README can be found. 
+Ex: .../LabX/project123/{{/F}}
+
+**Warning:** This README must be updated whenever the folder structure changes (when folders are added, renamed, moved or removed)!
+
+---
+
+## Part 2 — Folder structure
+
+> This part describes how the project folders and files are organized. It does not describe the README document or the data ownership.
+
+Files location: {{F:files}}Where are the files referenced here kept? Include a file path so people can easily find the necessary files. If there are permission restrictions, you may also want to include that information. 
+Ex: .../LabX/project123/{{/F}}
+
+Folder structure maintainer: {{F:fm}}Folder structure maintainer: Person who is currently responsible for maintaining this project folder structure. This is the contact for questions about the folders and files, and for suggested changes to the structure. It can be the same person as the README file maintainer. Include name, institution and email.
+Ex: Human AT Lab Manager, humanatlabmanager@ceb.uminho.pt{{/F}}
+
+### Folder structure: 
+
+This structure was created with the `Research Folder Structure Generator`. Update it if you add, rename or remove folders.
+
+{{FOLDER_STRUCTURE}}
+
+### Folder descriptions:
+
+{{FOLDER_DESCRIPTIONS}}
+
+---
+
+## Part 3 — Data ownership, authorship and licensing
+
+> This part describes the research data: who created them, who is responsible for them, who holds rights over them and under which conditions they can be accessed and reused. It does not describe the README document or the folder structure.
+
+This section documents the people and organizations involved in generating, managing and maintaining the research data, as well as the conditions under which the data can be accessed, shared and reused. Complete the fields that apply to your project. If a role or license is not applicable or has not been assigned, indicate this rather than making assumptions.
+
+### Data Creators and Contributors
+
+Identify the individuals who generated, collected, processed or otherwise contributed to the research data. Describe their contributions as clearly as possible.
+
+| Name      | ORCID           | Affiliation              | Contribution / Role         |
+|-----------|-----------------|--------------------------|-----------------------------|
+{{F:ct}}| Full name | ORCID ID or N/A | Institution / Department | e.g. data collection        |
+| Full name | ORCID ID or N/A | Institution / Department | e.g. data processing        |
+| Full name | ORCID ID or N/A | Institution / Department | e.g. data analysis          |{{/F}}
+
+### Project Responsibility
+
+**Principal Investigator (PI):** {{F:pi}}Name and institutional email of the person responsible for the scientific direction of the project.{{/F}}
+
+**Data Manager / Data Steward:** {{F:dm}}Name and institutional email of the person coordinating data management activities, if applicable.{{/F}}
+
+**Data Custodian:** {{F:dc}}Name and institutional email of the person or team responsible for maintaining the data and overseeing access to them, if applicable.{{/F}}
+
+### Data Ownership and Rights
+
+**Rights holder:** {{F:rh}}Identify the person(s) or organization(s) holding the relevant intellectual property rights or other applicable rights over the data or database, where known.{{/F}}
+
+**Institutional affiliation:** {{F:ia}}Institution(s) associated with the generation and management of the data.{{/F}}
+
+**Funding source:** {{F:fs}}Identify the project or funding programme, including the grant reference, where applicable.{{/F}}
+
+**Important:** Data creators, the Principal Investigator, the data custodian and the rights holder may be different people or organizations. Rights and ownership may depend on institutional policies, funding conditions, collaboration agreements and applicable legislation. If the rights holder is unclear, seek guidance from the relevant institutional office before assigning a license or sharing the data.
+
+### Access and Sharing Conditions
+
+**Access level:** {{F:al}}Specify the conditions under which the data can be accessed.
+
+Examples:
+- Open access
+- Restricted access
+- Embargoed access
+- Confidential / Internal access{{/F}}
+
+**Access restrictions:** {{F:ar}}Describe any restrictions related to confidentiality, personal data, ethical approvals, consent forms, collaboration agreements or other applicable requirements.{{/F}}
+
+**Access procedure:** {{F:ap}}If access is restricted, explain whom to contact and how access can be requested.{{/F}}
+
+### Data License
+
+**License:** {{F:li}}Specify the license under which the data can be shared and reused, if applicable.{{/F}}
+
+**License URL:** {{F:lu}}Provide a link to the full license terms.{{/F}}
+
+**Additional requirements:** {{F:lr}}Specify any attribution requirements or other conditions for reuse.{{/F}}
+
+If no license has been assigned, state this explicitly. Do not assume that data are openly reusable simply because they are stored in a shared location or repository. Check that the person or organization assigning the license has the authority to do so.
+
+---
+
+[Save your README as a Markdown file (README.md), a non-proprietary format, and store it in the root folder of the project where it is accessible to the relevant team members. Review and update it whenever necessary.]
+</script>
+
+<script type="text/plain" id="tpl-raw">
+# README, File & Folder project Schema (Template)
+
+This document is adapted from *Template_README_fileOrg* by MIT Libraries Data Management Service / Massachusetts Institute of Technology (MIT), available at [Original Source (Dropbox)](https://www.dropbox.com/scl/fi/7z3ax03buxzbu71wvomdp/Template_README_fileOrg.txt?rlkey=x82sddsi95o77g9o4fv4csdkk&dl=0), and licensed under the [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+
+-------------------------------------------------------------------------------------------------
+The original content has been reorganized, edited and adapted to the context and needs of the Center of Biological Engineering (CEB), University of Minho. 
+Adapted by the Center of Biological Engineering (CEB), University of Minho.
+
+**Access:** [CEB Data Awareness – Project Folders](https://github.com/anadomingues20/data-awareness_project-folders)
+
+**Related files:** `template_README.md` and `file_naming_tips.md` will be included in this folder, and also available in the GitHub repository.
+
+-------------------------------------------------------------------------------------------------
+
+## Overview
+
+Project Name: Name the project for which this file organization documentation refers. 
+Ex: Project 123
 
 Creator: Person who created this project folder structure and README file (name, institution and email).
 Ex: Jane Doe, Human AT Lab, jane.doe@ceb.uminho.pt
@@ -128,11 +267,47 @@ Ex: Human AT Lab Manager, humanatlabmanager@ceb.uminho.pt
 
 This structure was created with the `Research Folder Structure Generator`. Update it if you add, rename or remove folders.
 
-{{FOLDER_STRUCTURE}}
+```
+<name>/
+├── 01-project-management/
+│   ├── 01-proposals/
+│   ├── 02-finance/
+│   └── 03-reports/
+├── 02-ethics-governance/
+│   ├── 01-ethics-approval/
+│   └── 02-consent-forms/
+├── 03-experiments/
+├── 04-data-management/
+└── 05-dissemination/
+    ├── 01-presentations/
+    │   ├── 01-lab-meeting/
+    │   └── 02-conferences/
+    ├── 02-publications/
+    ├── 03-poster/
+    └── 04-publicity/
+```
 
 ### Folder descriptions:
 
-{{FOLDER_DESCRIPTIONS}}
+```
+<name>/
+├── 01-project-management/    <- Planning and administration of the project.
+│   ├── 01-proposals/         <- Project proposals and applications.
+│   ├── 02-finance/           <- Budgets, expenses and other financial documents.
+│   └── 03-reports/           <- Progress and reports.
+├── 02-ethics-governance/     <- Ethics and governance documentation.
+│   ├── 01-ethics-approval/   <- Ethics applications and approvals.
+│   └── 02-consent-forms/     <- Consent forms.
+├── 03-experiments/           <- One folder for each experiment in the project. Use the "Research Folder Structure Generator" to create a new folder for each experiment.		
+├── 04-data-management/       <- Documents and files related to data management.
+└── 05-dissemination/         <- Material for sharing the work of the project.
+    ├── 01-presentations/     <- Presentations.
+    │   ├── 01-lab-meeting/   <- Presentations in lab meetings.
+    │   └── 02-conferences/   <- Presentations for conferences.
+    ├── 02-publications/      <- Publications and manuscripts.
+    ├── 03-poster/            <- Posters.
+    └── 04-publicity/         <- Publicity material.
+```
 
 ---
 
@@ -154,7 +329,7 @@ Identify the individuals who generated, collected, processed or otherwise contri
 
 ### Project Responsibility
 
-**Principal Investigator (PI):** {{PI|Name and institutional email of the person responsible for the scientific direction of the project.}}
+**Principal Investigator (PI):** Name and institutional email of the person responsible for the scientific direction of the project.
 
 **Data Manager / Data Steward:** Name and institutional email of the person coordinating data management activities, if applicable.
 
@@ -348,46 +523,112 @@ let type="project";const sel={project:{},experiment:{}};
 const $=s=>document.querySelector(s);
 const pad=n=>String(n).padStart(2,"0");
 const isSel=id=>sel[type][id]!==false;
-const clean=s=>s.trim().replace(/[\\\/:*?"<>|]/g,"").replace(/\s+/g,"-");
+const clean=s=>s.trim().replace(/[^A-Za-z0-9 _-]/g,"").replace(/\s+/g,"-");
 
 function setDown(n,v){sel[type][n.id]=v;n.kids.forEach(k=>setDown(k,v));}
 function onToggle(n,v){if(v){sel[type][n.id]=true;for(let p=n.par;p;p=p.par)sel[type][p.id]=true;}else setDown(n,false);}
 // Selected folders, renumbered in sequence among their siblings
-function chosen(nodes){let i=0;const o=[];nodes.forEach(n=>{if(!isSel(n.id))return;i++;const k=chosen(n.kids),e=[pad(i)+"-"+n.base,n.desc];if(k.length)e.push(k);o.push(e);});return o;}
+function chosen(nodes){let i=0;const o=[];nodes.forEach((n,j)=>{if(!isSel(n.id))return;i=type==="project"?j+1:i+1;const k=chosen(n.kids),e=[pad(i)+"-"+n.base,n.desc];if(k.length)e.push(k);o.push(e);});return o;}
 function treeLines(nodes,pre){const o=[];nodes.forEach((n,i)=>{const last=i===nodes.length-1;o.push(pre+(last?"└── ":"├── ")+n[0]+"/");if(n[2])o.push(...treeLines(n[2],pre+(last?"    ":"│   ")));});return o;}
 function descLines(nodes,path){const o=[];nodes.forEach(n=>{const p=path+n[0]+"/";o.push("",p,"    "+n[1]);if(n[2])o.push(...descLines(n[2],p));});return o;}
 function addFolders(z,nodes){nodes.forEach(n=>{const f=z.folder(n[0]);if(n[2])addFolders(f,n[2]);});}
 
 function info(){const T=TYPES[type],raw=$("#nm").value.trim(),c=clean(raw);return{T,raw,root:c?T.root(c):null,tree:chosen(T.tree)};}
-const V=id=>$("#"+id).value.trim();
 function treeDesc(nodes,pre){const o=[];nodes.forEach((n,i)=>{const last=i===nodes.length-1;o.push([pre+(last?"└── ":"├── ")+n[0]+"/",n[1]]);if(n[2])o.push(...treeDesc(n[2],pre+(last?"    ":"│   ")));});return o;}
 function treeBlock(root,tree){const rows=treeDesc(tree,""),w=Math.max(0,...rows.map(r=>r[0].length))+3;return [root+"/",...rows.map(r=>r[0].padEnd(w)+"<- "+r[1])];}
 function tail(name,root,tree){return ["This folder contains the "+type+"-level folder structure for **"+name+"**.","","## Naming scheme","","Folders are named `NN-content`:","","- `NN` is a two-digit index used to sort the folders.","- `content` describes what the folder contains, with words separated by hyphens.",...(type==="experiment"?["","The root folder is named `Experiment_` followed by the experiment name."]:[]),"","## Folder structure","","```",root+"/",...treeLines(tree,""),"```","","## Folder descriptions","","```",...treeBlock(root,tree),"```"].join("\n")+"\n";}
-// The project README comes from the template in <script id="tpl-project">; only these placeholders are replaced.
-function projectReadme(root,tree,name,pi){const tpl=document.getElementById("tpl-project").textContent.replace(/^\n/,"").replace(/\r\n/g,"\n");
+// ---- Pre-fill form (project tab) ----
+const ACCESS=["Open access","Restricted access","Embargoed access","Confidential / Internal access"];
+const PERSON3=[["name","Name"],["inst","Institution"],["mail","Email"]],PERSON2=[["name","Name"],["mail","Email"]];
+const GROUPS=[
+ {t:"Overview",open:true,f:[{k:"cr",l:"Creator",p:3,h:"Person who created this folder structure and README (the person using this tool)."}]},
+ {t:"Part 1 — About this README",f:[{k:"rm",l:"README file maintainer",p:3,same:"cr",sl:"Same as creator"}]},
+ {t:"Part 2 — Folder structure",f:[{k:"fm",l:"Folder structure maintainer",p:3,same:"rm",sl:"Same as README maintainer"}]},
+ {t:"Part 3 — Data ownership, authorship and licensing",f:[
+  {k:"pi",l:"Principal Investigator (PI)",p:2},{k:"dm",l:"Data Manager / Data Steward",p:2},{k:"dc",l:"Data Custodian",p:2,nl:"Name (person or team)"},
+  {k:"ct",l:"Data creators and contributors",x:"table"},
+  {k:"rh",l:"Rights holder",x:"text"},{k:"ia",l:"Institutional affiliation",x:"text"},{k:"fs",l:"Funding source",x:"text"},
+  {k:"al",l:"Access level",x:"select"},{k:"ar",l:"Access restrictions",x:"area"},{k:"ap",l:"Access procedure",x:"area"},
+  {k:"li",l:"License",x:"text",ph:"e.g. CC BY 4.0"},{k:"lu",l:"License URL",x:"text",ph:"https://…"},{k:"lr",l:"Additional requirements",x:"area"}]}
+];
+let ctN=0;
+function mk(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+function inputBox(id,label,ph){const w=mk("div","fld"),l=mk("label",null,label);l.htmlFor=id;const i=document.createElement("input");i.type="text";i.id=id;i.autocomplete="off";if(ph)i.placeholder=ph;w.append(l,i);return w;}
+function addRow(){const n=++ctN,row=mk("div","ctrow");row.id="ctr-"+n;
+ [["name","Name"],["orcid","ORCID","0000-0000-0000-0000"],["aff","Affiliation"],["role","Contribution / Role"]].forEach(c=>row.appendChild(inputBox("ct-"+n+"-"+c[0],c[1],c[2])));
+ const b=mk("button","sm","Remove");b.type="button";b.onclick=()=>{row.remove();refresh();};row.appendChild(b);
+ row.querySelectorAll("input").forEach(x=>x.addEventListener("input",refresh));$("#ct-rows").appendChild(row);}
+function buildForm(){const host=$("#meta");
+ GROUPS.forEach(g=>{const d=mk("details","card");if(g.open)d.open=true;d.appendChild(mk("summary",null,g.t));
+  g.f.forEach(f=>{const w=mk("div","fldt");
+   if(f.p){w.appendChild(mk("div","fl",f.l));
+    if(f.same){const lb=mk("label","it"),cb=document.createElement("input");cb.type="checkbox";cb.id=f.k+"-same";lb.append(cb,document.createTextNode(f.sl));w.appendChild(lb);}
+    const g2=mk("div","g3");(f.p===3?PERSON3:PERSON2).forEach(c=>g2.appendChild(inputBox(f.k+"-"+c[0],c[0]==="name"&&f.nl?f.nl:c[1],c[0]==="mail"?"name@institution.pt":"")));w.appendChild(g2);
+    if(f.h)w.appendChild(mk("p","hint",f.h));}
+   else if(f.x==="table"){w.appendChild(mk("div","fl",f.l));const rows=mk("div");rows.id="ct-rows";w.appendChild(rows);
+    const b=mk("button","sm","Add person");b.type="button";b.id="ct-add";b.onclick=()=>{addRow();refresh();};w.appendChild(b);
+    w.appendChild(mk("p","hint","Only rows with a name are written. An empty ORCID is written as N/A."));}
+   else if(f.x==="select"){const l=mk("label",null,f.l);l.htmlFor=f.k;const s=document.createElement("select");s.id=f.k;
+    [""].concat(ACCESS).forEach(o=>{const op=document.createElement("option");op.value=o;op.textContent=o||"Not specified";s.appendChild(op);});w.append(l,s);}
+   else if(f.x==="area"){const l=mk("label",null,f.l);l.htmlFor=f.k;const a=document.createElement("textarea");a.id=f.k;a.rows=2;w.append(l,a);}
+   else w.appendChild(inputBox(f.k,f.l,f.ph));
+   d.appendChild(w);});
+  host.appendChild(d);});
+ addRow();
+ host.querySelectorAll("input,textarea,select").forEach(x=>x.addEventListener("input",refresh));
+ host.querySelectorAll("select,input[type=checkbox]").forEach(x=>x.addEventListener("change",refresh));}
+const G=id=>{const e=document.getElementById(id);return e?e.value.trim():"";};
+function sync(){[["rm","cr"],["fm","rm"]].forEach(p=>{const cb=document.getElementById(p[0]+"-same"),on=cb.checked;
+ PERSON3.forEach(c=>{const e=document.getElementById(p[0]+"-"+c[0]);if(on)e.value=G(p[1]+"-"+c[0]);e.disabled=on;});});}
+function person(k,parts){return parts.map(c=>G(k+"-"+c)).filter(Boolean).join(", ");}
+const cell=(s,w)=>s.replace(/\|/g,"\\|").replace(/\s+/g," ").padEnd(w);
+const text=id=>G(id).split(/\r?\n/).map(s=>s.trim()).filter(Boolean).join("  \n");
+function normOrcid(s){return s.trim().replace(/^https?:\/\/orcid\.org\//i,"").toUpperCase();}
+function orcidMsg(s){const v=normOrcid(s);if(!v)return "";if(!/^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(v))return "ORCID format: 0000-0000-0000-0000.";
+ const d=v.replace(/-/g,"");let t=0;for(let i=0;i<15;i++)t=(t+ +d[i])*2;const c=(12-t%11)%11,ch=c===10?"X":String(c);return ch===d[15]?"":"This ORCID is not valid (check digit).";}
+function emailMsg(s){return !s||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)?"":"Enter a valid email address.";}
+function urlMsg(s){if(!s)return "";try{const u=new URL(s);return /^https?:$/.test(u.protocol)&&u.hostname.includes(".")?"":"Enter a valid link starting with http:// or https://.";}catch(e){return "Enter a valid link starting with http:// or https://.";}}
+function today(){const d=new Date();return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+function values(root){sync();
+ const v={project:$("#nm").value.trim(),creator:person("cr",["name","inst","mail"]),rm:person("rm",["name","inst","mail"]),fm:person("fm",["name","inst","mail"]),
+  pi:person("pi",["name","mail"]),dm:person("dm",["name","mail"]),dc:person("dc",["name","mail"]),rh:text("rh"),ia:text("ia"),fs:text("fs"),al:G("al"),
+  ar:text("ar"),ap:text("ap"),li:G("li"),lu:G("lu"),lr:text("lr")};
+ if(root)v.loc=".../"+root+"/";
+ const au=G("cr-name")||v.creator;
+ if(au)v.rev="|"+cell(today(),10)+"|"+cell(au,24)+"|"+cell("created README document",39)+"|";
+ const rows=[];document.querySelectorAll("#ct-rows .ctrow").forEach(r=>{const n=r.id.slice(4),g=s=>G("ct-"+n+"-"+s);if(!g("name"))return;
+  rows.push("| "+cell(g("name"),9)+" | "+cell(normOrcid(g("orcid"))||"N/A",15)+" | "+cell(g("aff"),24)+" | "+cell(g("role"),27)+" |");});
+ if(rows.length)v.ct=rows.join("\n");
+ return v;}
+function projectReadme(root,tree){const tpl=document.getElementById("tpl-project").textContent.replace(/^\n/,"").replace(/\r\n/g,"\n"),v=values(root);
  const struct=["```",root+"/",...treeLines(tree,""),"```"].join("\n"),desc=["```",...treeBlock(root,tree),"```"].join("\n");
- return tpl.split("{{FOLDER_STRUCTURE}}").join(struct).split("{{FOLDER_DESCRIPTIONS}}").join(desc).split("{{PROJECT_NAME}}").join(name).replace(/\{\{PI\|(.*?)\}\}/g,(m,d)=>pi||d).replace(/\n+$/,"")+"\n";}
+ return tpl.replace(/\{\{F:(\w+)\}\}([\s\S]*?)\{\{\/F\}\}/g,(m,k,d)=>v[k]?v[k]:d).replace("{{FOLDER_STRUCTURE}}",()=>struct).replace("{{FOLDER_DESCRIPTIONS}}",()=>desc).replace(/\n+$/,"")+"\n";}
+function validateForm(errs){
+ const chk=(id,fn)=>{const e=document.getElementById(id);if(!e)return;put(errs,id,e.disabled||type!=="project"?"":fn(e.value.trim()),true);};
+ ["cr","rm","fm","pi","dm","dc"].forEach(k=>chk(k+"-mail",emailMsg));
+ document.querySelectorAll("#ct-rows .ctrow").forEach(r=>chk("ct-"+r.id.slice(4)+"-orcid",orcidMsg));
+ chk("lu",urlMsg);}
 function readme(){const {T,raw,root,tree}=info(),r=root||T.root("<name>"),name=raw||"<"+T.label+" name>";
- if(type==="project")return projectReadme(r,tree,name,V("f-pi"));
+ if(type==="project")return projectReadme(r,tree);
  return "# Title\n# "+name+"\n\nCreated: "+new Date().toISOString().slice(0,10)+"\n\n"+tail(name,r,tree);}
-function list(nodes,box,depth){let i=0;nodes.forEach(n=>{const on=isSel(n.id);if(on)i++;
+function list(nodes,box,depth){let i=0;nodes.forEach((n,j)=>{const on=isSel(n.id);i=type==="project"?j+1:(on?i+1:i);
  const lab=document.createElement("label");lab.className="it";lab.style.marginLeft=(depth*20)+"px";lab.title=n.desc;
  const cb=document.createElement("input");cb.type="checkbox";cb.checked=on;cb.onchange=()=>{onToggle(n,cb.checked);refresh();};
- const sp=document.createElement("span");sp.textContent=(on?pad(i)+"-":"")+n.base+"/";if(!on)sp.className="off";
+ const sp=document.createElement("span");sp.textContent=((on||type==="project")?pad(i)+"-":"")+n.base+"/";if(!on)sp.className="off";
  lab.append(cb,sp);box.appendChild(lab);list(n.kids,box,depth+1);});}
 function errEl(id){let e=document.getElementById("e-"+id);if(!e){e=document.createElement("div");e.id="e-"+id;e.className="err";e.setAttribute("role","alert");$("#"+id).insertAdjacentElement("afterend",e);}return e;}
 function put(errs,id,m,blocking){const e=errEl(id);e.textContent=m;e.style.color=blocking?"":"var(--mut)";$("#"+id).classList.toggle("bad",!!(m&&blocking));if(m&&blocking)errs.push({id:id,msg:m});}
-function validate(){const errs=[],raw=$("#nm").value;let m="",b=true;
- if(raw.trim()&&!clean(raw))m="The name has no characters that can be used in a folder name.";
- else if(/[\\\/:*?"<>|]/.test(raw)){m="These characters are removed from the folder name: \\ / : * ? \" < > |";b=false;}
- put(errs,"nm",m,b);
+function validate(){const errs=[],raw=$("#nm").value.trim();let m="";
+ const bad=[...new Set(raw.match(/[^A-Za-z0-9 _-]/g)||[])];
+ if(bad.length)m="Not allowed in the name: "+bad.map(c=>c===" "?"":c).join(" ")+" — use only letters (a-z, no accents), numbers, hyphens (-) and underscores (_). Spaces are replaced by hyphens.";
+ put(errs,"nm",m,true);
+ validateForm(errs);
  return errs;}
-function refresh(){const {T,root}=info();$("#lbl").textContent=T.field;$("#nm").placeholder=T.ph;$("#hint").textContent=T.rootHint+(root?" Root folder: "+root+"/":"");
- const box=$("#list");box.innerHTML="";list(T.tree,box,0);$("#meta").style.display=type==="project"?"":"none";$("#prev").textContent=readme();validate();}
+function refresh(){const {T,root}=info();$("#lbl").textContent=T.field+" (required)";$("#nm").placeholder=T.ph;$("#hint").textContent=T.rootHint+(root?" Root folder: "+root+"/":"");
+ const box=$("#list");box.innerHTML="";list(T.tree,box,0);$("#meta").style.display=type==="project"?"":"none";$("#fhint").textContent=type==="project"?"The folder structure is fixed: you can only remove folders, and the remaining folders keep their numbers. Unchecking a folder also unchecks its subfolders.":"Folders are numbered automatically in the order of the selected folders. Unchecking a folder also unchecks its subfolders.";$("#prev").textContent=readme();validate();}
 function setType(t){type=t;Object.keys(TYPES).forEach(k=>$("#t-"+k).setAttribute("aria-selected",k===t));$("#msg").textContent="";refresh();}
 Object.keys(TYPES).forEach(k=>$("#t-"+k).onclick=()=>setType(k));
 $("#nm").addEventListener("input",refresh);
-document.querySelectorAll("#meta input,#meta textarea").forEach(x=>x.addEventListener("input",refresh));
 $("#all").onclick=()=>{TYPES[type].tree.forEach(n=>setDown(n,true));refresh();};
 $("#none").onclick=()=>{TYPES[type].tree.forEach(n=>setDown(n,false));refresh();};
 
@@ -397,10 +638,12 @@ $("#go").onclick=async()=>{const msg=$("#msg"),{T,root,tree}=info();msg.textCont
  if(!tree.length){msg.textContent="Please select at least one folder.";return;}
  if(typeof JSZip==="undefined"){msg.textContent="The ZIP library could not be loaded. Check your connection.";return;}
  const z=new JSZip(),R=z.folder(root);addFolders(R,tree);R.file("README.md",readme());
+ if(type==="project")R.file("template_README.md",document.getElementById("tpl-raw").textContent.replace(/^\n/,""));
  if(type==="project")R.file("file_naming_tips.md",document.getElementById("tpl-tips").textContent.replace(/^\n/,"").replace(/\n+$/,"")+"\n");
  const blob=await z.generateAsync({type:"blob"});
  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=root+".zip";document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(a.href),2000);msg.textContent="Downloaded "+root+".zip";};
+buildForm();
 refresh();
 </script>
 </body>
